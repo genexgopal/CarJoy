@@ -24,15 +24,16 @@ const LandingPage = () => {
             {/* --- NAV BAR --- */}
             <header className="w-full bg-white/90 backdrop-blur-md border-b border-slate-100 py-4 px-6 md:px-12 flex items-center justify-between sticky top-0 z-50">
                 <div className="flex items-center space-x-3 cursor-pointer" onClick={() => setView("landing")}>
-                    <div className="w-9 h-9 bg-[#003366] rounded-lg flex items-center justify-center shadow-lg">
-                        <span className="text-white font-bold text-lg">S</span>
+                    {/* <div className="w-10 h-10 rounded-lg flex items-center justify-center shadow-lg">
+                        <span className="text-white font-bold text-lg"><img src="src/assets/logo_l.png"></img></span>
                     </div>
                     <div className="flex flex-col">
                         <span className="text-xl font-black leading-none text-[#003366] tracking-tighter">
                             SHIPMY<span className="text-[#f26522]">PARCEL</span>
                         </span>
                         <span className="text-[9px] font-bold text-slate-400 tracking-[0.25em] uppercase">Logistics Intelligence</span>
-                    </div>
+                    </div> */}
+                    <img src="src/assets/logo_h.png"></img>
                 </div>
                 
                 <nav className="hidden lg:block">
