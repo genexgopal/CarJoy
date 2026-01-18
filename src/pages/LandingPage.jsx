@@ -78,7 +78,7 @@ const LandingPage = () => {
                                 <button onClick={() => setActiveTab("track")} className={`flex-1 py-4 text-xs font-black rounded-[28px] transition-all ${activeTab === "track" ? "bg-white text-[#003366] shadow-sm" : "text-slate-400"}`}>TRACK</button>
                              </div>
                              <div className="p-8">
-                                {activeTab === "login" ? <LoginPage /> : <TrackingPage />}
+                                {activeTab === "login" ? <LoginPage embedded={true} /> : <TrackingPage />}
                              </div>
                         </div>
                     </div>
