@@ -1,9 +1,13 @@
-import { useState, useEffect, useCallback, useMemo, memo } from "react";
+import { useState, useEffect, useMemo, memo } from "react";
 import { Link } from "react-router-dom";
 import AdminNavbar from "../../components/AdminNavbar.jsx";
 import AdminHeader from "../../components/AdminHeader.jsx";
 import ResponsiveContainer from "../../components/ResponsiveContainer.jsx";
 import { IconLibrary } from "../../components/IconLibrary.jsx";
+
+// Zod validation imports
+import { stepFields } from "../../schemas/shipmentValidation";
+import { validateStep as zodValidateStep, validateField as zodValidateField, validateFullForm } from "../../utils/validation";
 
 // FormField component defined OUTSIDE AdminForm to prevent re-creation on every render
 const FormField = memo(({
@@ -161,20 +165,9 @@ function AdminForm() {
     return () => clearTimeout(timeoutId);
   }, [formData]);
 
-  // Email validation
-  const validateEmail = (email) => {
-    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-  };
-
-  // Phone validation
-  const validatePhone = (phone) => {
-    return /^[\d\s+()-]{10,}$/.test(phone);
-  };
-
-  // Pincode validation
-  const validatePincode = (pincode) => {
-    return /^\d{6}$/.test(pincode);
-  };
+  // =============================================================================
+  // INPUT HANDLERS
+  // =============================================================================
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -192,98 +185,47 @@ function AdminForm() {
     }
   };
 
+  /**
+   * Handle field blur - validates field using Zod
+   * Provides real-time validation feedback
+   */
   const handleBlur = (name) => {
     setFocusedField(null);
     setTouchedFields(prev => ({ ...prev, [name]: true }));
 
-    // Validate on blur for better UX
-    validateField(name, formData[name]);
-  };
-
-  const validateField = (name, value) => {
-    let error = "";
-
-    if (name.includes('Email') && value && !validateEmail(value)) {
-      error = "Please enter a valid email address";
-    } else if (name.includes('Phone') && value && !validatePhone(value)) {
-      error = "Please enter a valid phone number";
-    } else if (name.includes('Pincode') && value && !validatePincode(value)) {
-      error = "Please enter a valid 6-digit pincode";
-    }
-
+    // Validate field using Zod
+    const error = zodValidateField(name, formData[name], formData);
     if (error) {
       setErrors(prev => ({ ...prev, [name]: error }));
+    } else {
+      // Clear error if field is now valid
+      setErrors(prev => ({ ...prev, [name]: '' }));
     }
   };
 
-  const validateStep = useCallback((step) => {
-    const newErrors = {};
+  /**
+   * Validate a specific form step using Zod schemas
+   * @param {number} step - The step number to validate (1, 2, or 3)
+   * @returns {boolean} - True if step is valid
+   */
+  const validateStep = (step) => {
+    const { isValid, errors: stepErrors } = zodValidateStep(step, formData);
+    setErrors(stepErrors);
+    return isValid;
+  };
 
-    if (step === 1) {
-      if (!formData.orderNumber) newErrors.orderNumber = "Order number is required";
-      if (!formData.orderDate) newErrors.orderDate = "Order date is required";
-      if (!formData.senderName) newErrors.senderName = "Sender name is required";
-      if (!formData.senderEmail) {
-        newErrors.senderEmail = "Sender email is required";
-      } else if (!validateEmail(formData.senderEmail)) {
-        newErrors.senderEmail = "Please enter a valid email address";
-      }
-      if (!formData.senderPhone) {
-        newErrors.senderPhone = "Sender phone is required";
-      } else if (!validatePhone(formData.senderPhone)) {
-        newErrors.senderPhone = "Please enter a valid phone number";
-      }
-      if (!formData.senderAddress) newErrors.senderAddress = "Sender address is required";
-      if (!formData.senderPincode) {
-        newErrors.senderPincode = "Sender pincode is required";
-      } else if (!validatePincode(formData.senderPincode)) {
-        newErrors.senderPincode = "Please enter a valid 6-digit pincode";
-      }
-    }
-
-    if (step === 2) {
-      if (!formData.receiverName) newErrors.receiverName = "Receiver name is required";
-      if (!formData.receiverEmail) {
-        newErrors.receiverEmail = "Receiver email is required";
-      } else if (!validateEmail(formData.receiverEmail)) {
-        newErrors.receiverEmail = "Please enter a valid email address";
-      }
-      if (!formData.receiverPhone) {
-        newErrors.receiverPhone = "Receiver phone is required";
-      } else if (!validatePhone(formData.receiverPhone)) {
-        newErrors.receiverPhone = "Please enter a valid phone number";
-      }
-      if (!formData.receiverAddress) newErrors.receiverAddress = "Receiver address is required";
-      if (!formData.receiverPincode) {
-        newErrors.receiverPincode = "Receiver pincode is required";
-      } else if (!validatePincode(formData.receiverPincode)) {
-        newErrors.receiverPincode = "Please enter a valid 6-digit pincode";
-      }
-    }
-
-    if (step === 3) {
-      if (!formData.weight) newErrors.weight = "Weight is required";
-      if (!formData.itemDescription) newErrors.itemDescription = "Item description is required";
-      if (!formData.itemValue) newErrors.itemValue = "Item value is required";
-    }
-
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  }, [formData]);
-
+  /**
+   * Handle navigation to next step
+   * Validates current step using Zod before proceeding
+   */
   const handleNext = () => {
     // Mark current step fields as touched so errors show
-    const stepFields = {
-      1: ['orderNumber', 'orderDate', 'senderName', 'senderEmail', 'senderPhone', 'senderAddress', 'senderPincode'],
-      2: ['receiverName', 'receiverEmail', 'receiverPhone', 'receiverAddress', 'receiverPincode'],
-      3: ['weight', 'itemDescription', 'itemValue']
-    };
-
     const fieldsToTouch = stepFields[currentStep] || [];
     const newTouched = { ...touchedFields };
     fieldsToTouch.forEach(field => { newTouched[field] = true; });
     setTouchedFields(newTouched);
 
+    // Validate using Zod
     if (validateStep(currentStep)) {
       setCurrentStep((prev) => Math.min(prev + 1, 3));
       window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -308,85 +250,38 @@ function AdminForm() {
     localStorage.removeItem('shipmentFormDraft');
   };
 
+  /**
+   * Handle form submission
+   * Uses Zod validateFullForm for complete validation
+   */
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     // Mark all fields as touched so validation errors show
     const allFields = [
-      'orderNumber', 'orderDate', 'senderName', 'senderEmail', 'senderPhone', 'senderAddress', 'senderPincode',
-      'receiverName', 'receiverEmail', 'receiverPhone', 'receiverAddress', 'receiverPincode',
-      'weight', 'itemDescription', 'itemValue'
+      ...stepFields[1],
+      ...stepFields[2],
+      ...stepFields[3]
     ];
     const allTouched = {};
     allFields.forEach(field => { allTouched[field] = true; });
     setTouchedFields(allTouched);
 
-    // Validate all steps before submission
-    const allErrors = {};
+    // Validate entire form using Zod
+    const { isValid, errors: validationErrors, firstErrorStep } = validateFullForm(formData);
 
-    // Step 1 validation
-    if (!formData.orderNumber) allErrors.orderNumber = "Order number is required";
-    if (!formData.orderDate) allErrors.orderDate = "Order date is required";
-    if (!formData.senderName) allErrors.senderName = "Sender name is required";
-    if (!formData.senderEmail) {
-      allErrors.senderEmail = "Sender email is required";
-    } else if (!validateEmail(formData.senderEmail)) {
-      allErrors.senderEmail = "Please enter a valid email address";
-    }
-    if (!formData.senderPhone) {
-      allErrors.senderPhone = "Sender phone is required";
-    } else if (!validatePhone(formData.senderPhone)) {
-      allErrors.senderPhone = "Please enter a valid phone number";
-    }
-    if (!formData.senderAddress) allErrors.senderAddress = "Sender address is required";
-    if (!formData.senderPincode) {
-      allErrors.senderPincode = "Sender pincode is required";
-    } else if (!validatePincode(formData.senderPincode)) {
-      allErrors.senderPincode = "Please enter a valid 6-digit pincode";
-    }
+    if (!isValid) {
+      setErrors(validationErrors);
 
-    // Step 2 validation
-    if (!formData.receiverName) allErrors.receiverName = "Receiver name is required";
-    if (!formData.receiverEmail) {
-      allErrors.receiverEmail = "Receiver email is required";
-    } else if (!validateEmail(formData.receiverEmail)) {
-      allErrors.receiverEmail = "Please enter a valid email address";
-    }
-    if (!formData.receiverPhone) {
-      allErrors.receiverPhone = "Receiver phone is required";
-    } else if (!validatePhone(formData.receiverPhone)) {
-      allErrors.receiverPhone = "Please enter a valid phone number";
-    }
-    if (!formData.receiverAddress) allErrors.receiverAddress = "Receiver address is required";
-    if (!formData.receiverPincode) {
-      allErrors.receiverPincode = "Receiver pincode is required";
-    } else if (!validatePincode(formData.receiverPincode)) {
-      allErrors.receiverPincode = "Please enter a valid 6-digit pincode";
-    }
-
-    // Step 3 validation
-    if (!formData.weight) allErrors.weight = "Weight is required";
-    if (!formData.itemDescription) allErrors.itemDescription = "Item description is required";
-    if (!formData.itemValue) allErrors.itemValue = "Item value is required";
-
-    setErrors(allErrors);
-
-    // If there are errors, navigate to the first step with errors
-    if (Object.keys(allErrors).length > 0) {
-      const step1Fields = ['orderNumber', 'orderDate', 'senderName', 'senderEmail', 'senderPhone', 'senderAddress', 'senderPincode'];
-      const step2Fields = ['receiverName', 'receiverEmail', 'receiverPhone', 'receiverAddress', 'receiverPincode'];
-
-      const hasStep1Errors = step1Fields.some(field => allErrors[field]);
-      const hasStep2Errors = step2Fields.some(field => allErrors[field]);
-
-      if (hasStep1Errors) {
-        setCurrentStep(1);
-      } else if (hasStep2Errors) {
-        setCurrentStep(2);
+      // Navigate to the first step with errors
+      if (firstErrorStep) {
+        setCurrentStep(firstErrorStep);
       }
       return;
     }
 
+    // Clear any existing errors
+    setErrors({});
     setIsSubmitting(true);
 
     // Simulate API call
