@@ -104,7 +104,7 @@ function AdminNavbar() {
 
       {/* Sidebar */}
       <div
-        className={`bg-gradient-sidebar text-white h-screen fixed left-0 top-0 flex flex-col z-[56] shadow-2xl overflow-hidden ${isMobile
+        className={`bg-gradient-sidebar h-screen fixed left-0 top-0 flex flex-col z-[56] shadow-2xl overflow-hidden ${isMobile
             ? mobileMenuOpen ? 'translate-x-0 sidebar-animate' : '-translate-x-full'
             : ''
           }
@@ -112,12 +112,16 @@ function AdminNavbar() {
         `}
         style={{
           width: isMobile ? "280px" : sidebarWidth,
-          transition: isMobile ? 'transform 0.3s ease' : 'width 0.3s cubic-bezier(0.4, 0, 0.2, 1)'
+          transition: isMobile ? 'transform 0.3s ease' : 'width 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+          color: 'var(--sidebar-text)',
+          borderRight: '1px solid var(--sidebar-border)',
         }}
       >
         {/* Logo Section */}
-        <div className={`py-5 border-b border-white/10 transition-all duration-300 ${isExpanded || isMobile ? "px-5" : "px-3"
-          }`}>
+        <div
+          className={`py-5 transition-all duration-300 ${isExpanded || isMobile ? "px-5" : "px-3"}`}
+          style={{ borderBottom: '1px solid var(--sidebar-border)' }}
+        >
           <Link to="/admin" className="flex items-center gap-3 group">
             <div className={`relative transition-all duration-300 ${isExpanded || isMobile ? "w-12 h-12" : "w-10 h-10"
               }`}>
@@ -129,8 +133,8 @@ function AdminNavbar() {
             </div>
             {(isExpanded || isMobile) && (
               <div className="overflow-hidden">
-                <h1 className="text-lg font-bold text-white truncate">ShipMyParcel</h1>
-                <p className="text-[10px] text-slate-400 font-medium uppercase tracking-wider">Admin Panel</p>
+                <h1 className="text-lg font-bold truncate" style={{ color: 'var(--sidebar-text)' }}>ShipMyParcel</h1>
+                <p className="text-[10px] font-medium uppercase tracking-wider" style={{ color: 'var(--sidebar-text-muted)' }}>Admin Panel</p>
               </div>
             )}
           </Link>
@@ -139,7 +143,7 @@ function AdminNavbar() {
         {/* Navigation Section Label */}
         {(isExpanded || isMobile) && (
           <div className="px-5 pt-6 pb-2">
-            <p className="text-[10px] text-slate-400 font-semibold uppercase tracking-widest">Navigation</p>
+            <p className="text-[10px] font-semibold uppercase tracking-widest" style={{ color: 'var(--sidebar-text-muted)' }}>Navigation</p>
           </div>
         )}
 
@@ -155,8 +159,21 @@ function AdminNavbar() {
                 onMouseLeave={() => setHoveredItem(null)}
                 className={`nav-item relative flex items-center gap-3 px-3 py-3 rounded-xl transition-all duration-200 group ${isActive(item.path)
                     ? "sidebar-nav-active text-white"
-                    : "text-slate-300 hover:bg-white/10 hover:text-white"
+                    : ""
                   }`}
+                style={!isActive(item.path) ? {
+                  color: 'var(--sidebar-text)',
+                } : {}}
+                onMouseOver={(e) => {
+                  if (!isActive(item.path)) {
+                    e.currentTarget.style.backgroundColor = 'var(--sidebar-hover-bg)';
+                  }
+                }}
+                onMouseOut={(e) => {
+                  if (!isActive(item.path)) {
+                    e.currentTarget.style.backgroundColor = 'transparent';
+                  }
+                }}
               >
                 {/* Icon */}
                 <div className={`flex-shrink-0 transition-transform duration-200 ${hoveredItem === item.path && !isActive(item.path) ? 'scale-110' : ''
@@ -173,7 +190,7 @@ function AdminNavbar() {
                   <div className="flex-1 min-w-0 overflow-hidden">
                     <p className="text-sm font-semibold truncate">{item.label}</p>
                     {(isExpanded || isMobile) && (
-                      <p className="text-[10px] text-white truncate group-hover:text-white transition-colors">
+                      <p className="text-[10px] truncate transition-colors" style={{ color: isActive(item.path) ? 'rgba(255,255,255,0.8)' : 'var(--sidebar-text-muted)' }}>
                         {item.description}
                       </p>
                     )}
@@ -198,16 +215,22 @@ function AdminNavbar() {
         </nav>
 
         {/* Divider */}
-        <div className="mx-3 border-t border-white/10"></div>
+        <div className="mx-3" style={{ borderTop: '1px solid var(--sidebar-border)' }}></div>
 
         {/* Bottom Section */}
         <div className={`p-3 space-y-2 ${isExpanded || isMobile ? "" : "flex flex-col items-center"}`}>
           {/* Settings Link */}
           <Link
             to="/admin/settings"
-            className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-300 hover:bg-white/10 hover:text-white transition-all duration-200 ${!isExpanded && !isMobile ? "justify-center w-12" : ""
-              }`}
+            className={`flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all duration-200 ${!isExpanded && !isMobile ? "justify-center w-12" : ""}`}
+            style={{ color: 'var(--sidebar-text)' }}
             title="Settings"
+            onMouseOver={(e) => {
+              e.currentTarget.style.backgroundColor = 'var(--sidebar-hover-bg)';
+            }}
+            onMouseOut={(e) => {
+              e.currentTarget.style.backgroundColor = 'transparent';
+            }}
           >
             <IconLibrary.Settings size={20} color="currentColor" strokeWidth={2} />
             {(isExpanded || isMobile) && <span className="text-sm font-medium">Settings</span>}
@@ -223,8 +246,12 @@ function AdminNavbar() {
               className={`group flex items-center gap-2 px-3 py-2.5 w-full rounded-xl transition-all duration-300 ${!isExpanded ? "justify-center" : ""
                 } ${isToggleHovered
                   ? "bg-primary-ring text-primary border border-primary/30"
-                  : "bg-white/5 hover:bg-white/10 text-slate-300 hover:text-white border border-transparent"
+                  : "border border-transparent"
                 }`}
+              style={!isToggleHovered ? {
+                backgroundColor: 'var(--sidebar-hover-bg)',
+                color: 'var(--sidebar-text)'
+              } : {}}
               title={isExpanded ? "Collapse Sidebar (Click to minimize)" : "Expand Sidebar (Click to expand)"}
               aria-label={isExpanded ? "Collapse sidebar navigation" : "Expand sidebar navigation"}
               aria-expanded={isExpanded}

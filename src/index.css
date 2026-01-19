@@ -33,12 +33,43 @@
   --sidebar-gradient-mid: #002855;
   --sidebar-gradient-end: #003366;
 
+  /* ===== Sidebar Text Colors ===== */
+  --sidebar-text: #ffffff;
+  --sidebar-text-muted: #94a3b8;
+  --sidebar-hover-bg: rgba(255, 255, 255, 0.1);
+  --sidebar-border: rgba(255, 255, 255, 0.1);
+
   /* ===== Computed Gradients ===== */
   --gradient-primary: linear-gradient(to right, var(--color-primary), var(--color-primary-dark));
   --gradient-primary-vertical: linear-gradient(to bottom, var(--color-primary), var(--color-primary-dark));
   --gradient-primary-diagonal: linear-gradient(to bottom right, var(--color-primary), var(--color-primary-dark));
   --gradient-sidebar: linear-gradient(to bottom, var(--sidebar-gradient-start), var(--sidebar-gradient-mid), var(--sidebar-gradient-end));
   --gradient-secondary: linear-gradient(to right, var(--color-secondary), var(--color-secondary-dark));
+}
+
+/* ==========================================================================
+   Theme Transition
+   ========================================================================== */
+
+/* Smooth transition for theme color changes */
+*,
+*::before,
+*::after {
+  transition-property: background-color, border-color, box-shadow;
+  transition-duration: 0.3s;
+  transition-timing-function: ease-in-out;
+}
+
+/* Exclude elements that should transition normally (like buttons with hover) */
+button,
+a,
+input,
+select,
+textarea,
+.transition-all,
+.transition-colors,
+.transition-transform {
+  transition-property: all;
 }
 
 body {
