@@ -56,47 +56,6 @@ function AdminNavbar() {
 
   return (
     <>
-      <style>{`
-        .sidebar-scrollbar::-webkit-scrollbar {
-          width: 4px;
-        }
-        .sidebar-scrollbar::-webkit-scrollbar-track {
-          background: transparent;
-        }
-        .sidebar-scrollbar::-webkit-scrollbar-thumb {
-          background: rgba(255, 255, 255, 0.3);
-          border-radius: 4px;
-        }
-        .sidebar-scrollbar::-webkit-scrollbar-thumb:hover {
-          background: rgba(255, 255, 255, 0.4);
-        }
-        .nav-item-tooltip {
-          opacity: 0;
-          visibility: hidden;
-          transform: translateX(-8px);
-          transition: all 0.2s ease;
-        }
-        .nav-item:hover .nav-item-tooltip {
-          opacity: 1;
-          visibility: visible;
-          transform: translateX(0);
-        }
-        @keyframes slideIn {
-          from { opacity: 0; transform: translateX(-100%); }
-          to { opacity: 1; transform: translateX(0); }
-        }
-        @keyframes fadeIn {
-          from { opacity: 0; }
-          to { opacity: 1; }
-        }
-        .sidebar-animate {
-          animation: slideIn 0.3s ease-out;
-        }
-        .overlay-animate {
-          animation: fadeIn 0.2s ease-out;
-        }
-      `}</style>
-
       {/* Mobile Menu Button */}
       {isMobile && (
         <button
@@ -193,7 +152,7 @@ function AdminNavbar() {
                   <div className="flex-1 min-w-0 overflow-hidden">
                     <p className="text-sm font-semibold truncate">{item.label}</p>
                     {(isExpanded || isMobile) && (
-                      <p className="text-[10px] text-slate-400 truncate group-hover:text-slate-300 transition-colors">
+                      <p className="text-[10px] text-white truncate group-hover:text-white transition-colors">
                         {item.description}
                       </p>
                     )}
