@@ -48,10 +48,10 @@ function AdminWallet() {
           {/* Balance Cards */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
             {/* Current Balance */}
-            <div className="bg-gradient-to-br from-[#f26522] to-[#d4541a] text-white rounded-2xl p-8 shadow-lg">
+            <div className="bg-gradient-primary-diagonal text-white rounded-2xl p-8 shadow-lg">
               <p className="text-slate-100 text-sm font-bold mb-2">Current Balance</p>
               <p className="text-4xl font-black mb-4">₹{balance.toLocaleString('en-IN', {minimumFractionDigits: 2})}</p>
-              <button className="w-full bg-white text-[#f26522] font-bold py-2 rounded-lg hover:bg-slate-50 transition-colors">
+              <button className="w-full bg-white text-primary font-bold py-2 rounded-lg hover:bg-slate-50 transition-colors">
                 Add Funds
               </button>
             </div>

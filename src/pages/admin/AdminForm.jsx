@@ -35,7 +35,7 @@ const FormField = memo(({
       <label
         htmlFor={name}
         className={`block text-sm font-semibold mb-2 transition-colors duration-200 ${
-          isFocused ? 'text-[#f26522]' : hasError ? 'text-red-600' : 'text-slate-700'
+          isFocused ? 'text-primary' : hasError ? 'text-red-600' : 'text-slate-700'
         }`}
       >
         {label} {required && <span className="text-red-500">*</span>}
@@ -43,7 +43,7 @@ const FormField = memo(({
       <div className="relative">
         {Icon && (
           <div className={`absolute left-4 top-1/2 -translate-y-1/2 transition-colors duration-200 ${
-            isFocused ? 'text-[#f26522]' : hasError ? 'text-red-400' : 'text-slate-400'
+            isFocused ? 'text-primary' : hasError ? 'text-red-400' : 'text-slate-400'
           }`}>
             <Icon size={18} color="currentColor" />
           </div>
@@ -63,10 +63,10 @@ const FormField = memo(({
             ${hasError
               ? 'border-red-300 bg-red-50/50 focus:border-red-500 focus:ring-4 focus:ring-red-500/10'
               : isFocused
-                ? 'border-[#f26522] ring-4 ring-[#f26522]/10'
+                ? 'border-primary focus-ring-primary'
                 : isValid
                   ? 'border-emerald-300 bg-emerald-50/30'
-                  : 'border-slate-200 hover:border-slate-300 focus:border-[#f26522] focus:ring-4 focus:ring-[#f26522]/10'
+                  : 'border-slate-200 hover:border-slate-300 focus:border-primary focus-ring-primary'
             }`}
         />
         {/* Validation indicator */}
@@ -461,7 +461,7 @@ function AdminForm() {
                     className={`relative flex flex-col items-center group ${step.number <= currentStep ? 'cursor-pointer' : 'cursor-not-allowed'}`}
                   >
                     <div className={`w-14 h-14 rounded-2xl flex items-center justify-center transition-all duration-300 ${currentStep === step.number
-                        ? 'bg-gradient-to-br from-[#f26522] to-[#d4541a] shadow-lg shadow-orange-500/30 scale-110'
+                        ? 'bg-gradient-primary-diagonal shadow-primary scale-110'
                         : currentStep > step.number
                           ? 'bg-emerald-500 shadow-md'
                           : 'bg-slate-100 group-hover:bg-slate-200'
@@ -474,7 +474,7 @@ function AdminForm() {
                     </div>
                     {/* Step Label */}
                     <div className="mt-3 text-center">
-                      <p className={`text-sm font-bold transition-colors ${currentStep === step.number ? 'text-[#f26522]' : currentStep > step.number ? 'text-emerald-600' : 'text-slate-500'
+                      <p className={`text-sm font-bold transition-colors ${currentStep === step.number ? 'text-primary' : currentStep > step.number ? 'text-emerald-600' : 'text-slate-500'
                         }`}>
                         {step.title}
                       </p>
@@ -482,7 +482,7 @@ function AdminForm() {
                     </div>
                     {/* Progress percentage badge */}
                     {currentStep === step.number && getStepProgress[step.number] > 0 && getStepProgress[step.number] < 100 && (
-                      <div className="absolute -top-2 -right-2 px-2 py-0.5 bg-[#f26522] text-white text-xs font-bold rounded-full">
+                      <div className="absolute -top-2 -right-2 px-2 py-0.5 bg-primary text-white text-xs font-bold rounded-full">
                         {getStepProgress[step.number]}%
                       </div>
                     )}
@@ -706,7 +706,7 @@ function AdminForm() {
                   {/* Section Header */}
                   <div className="px-8 py-6 bg-gradient-to-r from-slate-50 to-white border-b border-slate-100">
                     <div className="flex items-center gap-4">
-                      <div className="w-12 h-12 bg-gradient-to-br from-[#f26522] to-[#d4541a] rounded-xl flex items-center justify-center shadow-lg">
+                      <div className="w-12 h-12 bg-gradient-primary-diagonal rounded-xl flex items-center justify-center shadow-lg">
                         <IconLibrary.Package size={24} color="white" />
                       </div>
                       <div>
@@ -768,15 +768,15 @@ function AdminForm() {
                             type="button"
                             onClick={() => setFormData(prev => ({ ...prev, courier: courier.value }))}
                             className={`p-4 rounded-xl border-2 text-left transition-all duration-200 ${formData.courier === courier.value
-                                ? 'border-[#f26522] bg-orange-50 shadow-md'
+                                ? 'border-primary bg-primary-50 shadow-md'
                                 : 'border-slate-200 hover:border-slate-300 hover:bg-slate-50'
                               }`}
                           >
-                            <div className={`w-10 h-10 rounded-lg flex items-center justify-center mb-3 ${formData.courier === courier.value ? 'bg-[#f26522]' : 'bg-slate-100'
+                            <div className={`w-10 h-10 rounded-lg flex items-center justify-center mb-3 ${formData.courier === courier.value ? 'bg-primary' : 'bg-slate-100'
                               }`}>
                               <IconLibrary.Truck size={20} color={formData.courier === courier.value ? 'white' : '#64748b'} />
                             </div>
-                            <p className={`font-bold text-sm ${formData.courier === courier.value ? 'text-[#f26522]' : 'text-slate-800'}`}>
+                            <p className={`font-bold text-sm ${formData.courier === courier.value ? 'text-primary' : 'text-slate-800'}`}>
                               {courier.label}
                             </p>
                             <p className="text-xs text-slate-500 mt-1">{courier.description}</p>
@@ -798,15 +798,15 @@ function AdminForm() {
                             type="button"
                             onClick={() => setFormData(prev => ({ ...prev, serviceType: service.value }))}
                             className={`p-5 rounded-xl border-2 text-left transition-all duration-200 ${formData.serviceType === service.value
-                                ? 'border-[#f26522] bg-orange-50 shadow-md'
+                                ? 'border-primary bg-primary-50 shadow-md'
                                 : 'border-slate-200 hover:border-slate-300 hover:bg-slate-50'
                               }`}
                           >
                             <div className="flex items-center justify-between mb-2">
-                              <p className={`font-bold ${formData.serviceType === service.value ? 'text-[#f26522]' : 'text-slate-800'}`}>
+                              <p className={`font-bold ${formData.serviceType === service.value ? 'text-primary' : 'text-slate-800'}`}>
                                 {service.label}
                               </p>
-                              <span className={`px-2 py-1 rounded-lg text-sm font-bold ${formData.serviceType === service.value ? 'bg-[#f26522] text-white' : 'bg-slate-100 text-slate-600'
+                              <span className={`px-2 py-1 rounded-lg text-sm font-bold ${formData.serviceType === service.value ? 'bg-primary text-white' : 'bg-slate-100 text-slate-600'
                                 }`}>
                                 {service.price}
                               </span>
@@ -842,7 +842,7 @@ function AdminForm() {
                     <button
                       type="button"
                       onClick={handleNext}
-                      className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-[#f26522] to-[#d4541a] text-white rounded-xl font-semibold shadow-lg shadow-orange-500/25 hover:shadow-xl hover:shadow-orange-500/30 hover:-translate-y-0.5 transition-all duration-200"
+                      className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-6 py-3 bg-gradient-primary text-white rounded-xl font-semibold shadow-primary hover:shadow-primary-hover hover:-translate-y-0.5 transition-all duration-200"
                     >
                       Continue
                       <IconLibrary.ChevronRight size={18} color="white" />

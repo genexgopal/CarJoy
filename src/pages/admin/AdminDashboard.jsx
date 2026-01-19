@@ -12,7 +12,7 @@ function AdminDashboard() {
     { label: "Total Orders", value: "2,450", change: "+12%", trend: "up", icon: IconLibrary.Package, color: "bg-blue-50 text-blue-600", iconBg: "from-blue-500 to-blue-600" },
     { label: "Revenue", value: "$45,231", change: "+8%", trend: "up", icon: IconLibrary.DollarSign, color: "bg-emerald-50 text-emerald-600", iconBg: "from-emerald-500 to-emerald-600" },
     { label: "Active Users", value: "1,234", change: "+15%", trend: "up", icon: IconLibrary.Users, color: "bg-purple-50 text-purple-600", iconBg: "from-purple-500 to-purple-600" },
-    { label: "Shipments", value: "892", change: "+5%", trend: "up", icon: IconLibrary.Truck, color: "bg-orange-50 text-orange-600", iconBg: "from-[#f26522] to-[#d4541a]" },
+    { label: "Shipments", value: "892", change: "+5%", trend: "up", icon: IconLibrary.Truck, color: "bg-primary-50 text-primary", iconBg: "bg-gradient-primary" },
   ];
 
   const recentOrders = [
@@ -61,7 +61,7 @@ function AdminDashboard() {
                   onClick={() => setTimeRange(range)}
                   className={`px-4 py-2 text-sm font-medium rounded-lg transition-all duration-200 ${
                     timeRange === range
-                      ? "bg-[#f26522] text-white shadow-md"
+                      ? "bg-primary text-white shadow-md"
                       : "text-slate-600 hover:bg-slate-50"
                   }`}
                 >
@@ -79,7 +79,7 @@ function AdminDashboard() {
                 className="bg-white rounded-2xl p-5 border border-slate-100 hover:shadow-xl hover:shadow-slate-200/50 hover:-translate-y-1 transition-all duration-300 group"
               >
                 <div className="flex justify-between items-start mb-4">
-                  <div className={`w-12 h-12 bg-gradient-to-br ${stat.iconBg} rounded-xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300`}>
+                  <div className={`w-12 h-12 ${stat.iconBg.startsWith('bg-') ? stat.iconBg : `bg-gradient-to-br ${stat.iconBg}`} rounded-xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300`}>
                     <stat.icon size={24} color="white" strokeWidth={2} />
                   </div>
                   <span className={`text-xs font-semibold px-2.5 py-1 rounded-full flex items-center gap-1 ${
@@ -104,7 +104,7 @@ function AdminDashboard() {
                 </div>
                 <Link
                   to="/admin/orders"
-                  className="inline-flex items-center gap-2 text-sm font-semibold text-[#f26522] hover:text-[#d4541a] transition-colors group"
+                  className="inline-flex items-center gap-2 text-sm font-semibold text-primary hover:text-primary-dark transition-colors group"
                 >
                   View All Orders
                   <IconLibrary.ChevronRight size={16} color="currentColor" className="group-hover:translate-x-1 transition-transform" />
@@ -152,7 +152,7 @@ function AdminDashboard() {
                         </td>
                         <td className="px-6 py-4 text-slate-500 text-sm font-medium">{order.date}</td>
                         <td className="px-6 py-4 text-right">
-                          <button className="p-2 rounded-lg text-slate-400 hover:text-[#f26522] hover:bg-orange-50 transition-all opacity-0 group-hover:opacity-100">
+                          <button className="p-2 rounded-lg text-slate-400 hover:text-primary hover:bg-primary-50 transition-all opacity-0 group-hover:opacity-100">
                             <IconLibrary.Eye size={18} color="currentColor" />
                           </button>
                         </td>
@@ -189,7 +189,7 @@ function AdminDashboard() {
                 title: "Reports",
                 desc: "Generate analytics and reports",
                 color: "orange",
-                gradient: "from-[#f26522] to-[#d4541a]"
+                gradient: "bg-gradient-primary"
               },
             ].map((link, idx) => (
               <Link
@@ -197,12 +197,12 @@ function AdminDashboard() {
                 to={link.to}
                 className="bg-white rounded-2xl p-6 border border-slate-100 hover:shadow-xl hover:shadow-slate-200/50 hover:-translate-y-1 transition-all duration-300 group"
               >
-                <div className={`w-14 h-14 bg-gradient-to-br ${link.gradient} rounded-xl flex items-center justify-center shadow-lg mb-4 group-hover:scale-110 transition-transform duration-300`}>
+                <div className={`w-14 h-14 ${link.gradient.startsWith('bg-') ? link.gradient : `bg-gradient-to-br ${link.gradient}`} rounded-xl flex items-center justify-center shadow-lg mb-4 group-hover:scale-110 transition-transform duration-300`}>
                   <link.icon size={28} color="white" strokeWidth={2} />
                 </div>
-                <h3 className="text-lg font-bold text-slate-800 mb-1 group-hover:text-[#f26522] transition-colors">{link.title}</h3>
+                <h3 className="text-lg font-bold text-slate-800 mb-1 group-hover:text-primary transition-colors">{link.title}</h3>
                 <p className="text-slate-500 text-sm">{link.desc}</p>
-                <div className="mt-4 flex items-center gap-1 text-sm font-medium text-[#f26522] opacity-0 group-hover:opacity-100 transition-opacity">
+                <div className="mt-4 flex items-center gap-1 text-sm font-medium text-primary opacity-0 group-hover:opacity-100 transition-opacity">
                   Go to {link.title.toLowerCase()}
                   <IconLibrary.ChevronRight size={16} color="currentColor" />
                 </div>

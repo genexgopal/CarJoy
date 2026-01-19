@@ -69,7 +69,7 @@ function AdminHeader() {
             <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
               <IconLibrary.Search
                 size={18}
-                color={searchFocused ? "#f26522" : "#94a3b8"}
+                color={searchFocused ? "var(--color-primary)" : "#94a3b8"}
                 strokeWidth={2}
               />
             </div>
@@ -82,7 +82,7 @@ function AdminHeader() {
               onBlur={() => setSearchFocused(false)}
               className={`w-full pl-11 pr-4 py-2.5 bg-slate-50 border-2 rounded-xl text-sm font-medium text-slate-700 placeholder-slate-400 outline-none transition-all duration-300 ${
                 searchFocused
-                  ? 'border-[#f26522] bg-white shadow-lg shadow-orange-500/10'
+                  ? 'border-primary bg-white shadow-lg shadow-primary'
                   : 'border-transparent hover:border-slate-200'
               }`}
             />
@@ -101,7 +101,7 @@ function AdminHeader() {
         <div className="flex items-center gap-2">
           {/* Quick Action Buttons */}
           <button
-            className="p-2.5 rounded-xl bg-slate-50 hover:bg-slate-100 text-slate-500 hover:text-[#f26522] transition-all duration-200 group"
+            className="p-2.5 rounded-xl bg-slate-50 hover:bg-slate-100 text-slate-500 hover:text-primary transition-all duration-200 group"
             title="Refresh"
           >
             <IconLibrary.RefreshCw
@@ -118,8 +118,8 @@ function AdminHeader() {
               onClick={() => setShowNotifications(!showNotifications)}
               className={`p-2.5 rounded-xl transition-all duration-200 relative ${
                 showNotifications
-                  ? 'bg-[#f26522] text-white'
-                  : 'bg-slate-50 hover:bg-slate-100 text-slate-500 hover:text-[#f26522]'
+                  ? 'bg-primary text-white'
+                  : 'bg-slate-50 hover:bg-slate-100 text-slate-500 hover:text-primary'
               }`}
               title="Notifications"
             >
@@ -139,7 +139,7 @@ function AdminHeader() {
             {showNotifications && (
               <div className="absolute right-0 mt-3 w-80 bg-white border border-slate-200 rounded-2xl shadow-2xl z-50 overflow-hidden">
                 {/* Header */}
-                <div className="bg-gradient-to-r from-[#003366] to-[#001a4d] p-4 flex justify-between items-center">
+                <div className="bg-gradient-secondary p-4 flex justify-between items-center">
                   <div>
                     <h3 className="text-sm font-bold text-white">Notifications</h3>
                     <p className="text-xs text-slate-300">{unreadCount} unread</p>
@@ -168,7 +168,7 @@ function AdminHeader() {
                             <div className="flex items-start justify-between gap-2">
                               <p className="text-sm font-semibold text-slate-800 truncate">{notification.title}</p>
                               {notification.unread && (
-                                <span className="w-2 h-2 bg-[#f26522] rounded-full flex-shrink-0 mt-1.5"></span>
+                                <span className="w-2 h-2 bg-primary rounded-full flex-shrink-0 mt-1.5"></span>
                               )}
                             </div>
                             <p className="text-xs text-slate-500 mt-0.5 truncate">{notification.message}</p>
@@ -182,7 +182,7 @@ function AdminHeader() {
 
                 {/* Footer */}
                 <div className="p-3 bg-slate-50 border-t border-slate-100">
-                  <button className="w-full py-2 text-sm font-semibold text-[#f26522] hover:text-[#d4541a] transition-colors">
+                  <button className="w-full py-2 text-sm font-semibold text-primary hover:text-primary-dark transition-colors">
                     View All Notifications
                   </button>
                 </div>
@@ -204,7 +204,7 @@ function AdminHeader() {
             >
               {/* User Avatar */}
               <div className="relative">
-                <div className="w-10 h-10 bg-gradient-to-br from-[#f26522] via-orange-500 to-[#d4541a] rounded-xl flex items-center justify-center text-white font-bold text-sm shadow-md">
+                <div className="w-10 h-10 bg-gradient-primary-diagonal rounded-xl flex items-center justify-center text-white font-bold text-sm shadow-md">
                   {user.initials}
                 </div>
                 <div className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-emerald-500 rounded-full border-2 border-white"></div>
@@ -228,7 +228,7 @@ function AdminHeader() {
             {showDropdown && (
               <div className="absolute right-0 mt-3 w-60 bg-white border border-slate-200 rounded-2xl shadow-2xl z-50 overflow-hidden">
                 {/* User Info Header */}
-                <div className="bg-gradient-to-r from-[#f26522] to-orange-500 p-4">
+                <div className="bg-gradient-primary p-4">
                   <div className="flex items-center gap-3">
                     <div className="w-12 h-12 bg-white/20 backdrop-blur rounded-xl flex items-center justify-center text-white font-bold text-lg">
                       {user.initials}
@@ -252,7 +252,7 @@ function AdminHeader() {
                       key={idx}
                       className="w-full px-4 py-3 text-left text-sm font-medium text-slate-700 hover:bg-slate-50 transition-colors flex items-center gap-3 group"
                     >
-                      <item.icon size={18} color="#f26522" strokeWidth={2} />
+                      <item.icon size={18} color="var(--color-primary)" strokeWidth={2} />
                       <span className="group-hover:translate-x-0.5 transition-transform">{item.label}</span>
                     </button>
                   ))}

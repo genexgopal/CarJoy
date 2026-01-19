@@ -84,7 +84,7 @@ function AdminNavbar() {
       {isMobile && (
         <button
           onClick={toggleSidebar}
-          className="fixed top-4 left-4 z-[60] p-2.5 bg-[#003366] text-white rounded-xl shadow-lg hover:bg-[#002855] transition-all duration-200"
+          className="fixed top-4 left-4 z-[60] p-2.5 bg-secondary text-white rounded-xl shadow-lg hover:bg-secondary-dark transition-all duration-200"
         >
           {mobileMenuOpen ? (
             <IconLibrary.ChevronLeft size={24} color="white" />
@@ -104,7 +104,7 @@ function AdminNavbar() {
 
       {/* Sidebar */}
       <div
-        className={`bg-gradient-to-b from-[#001a4d] via-[#002855] to-[#003366] text-white h-screen fixed left-0 top-0 flex flex-col z-[56] shadow-2xl overflow-hidden ${isMobile
+        className={`bg-gradient-sidebar text-white h-screen fixed left-0 top-0 flex flex-col z-[56] shadow-2xl overflow-hidden ${isMobile
             ? mobileMenuOpen ? 'translate-x-0 sidebar-animate' : '-translate-x-full'
             : ''
           }
@@ -122,8 +122,8 @@ function AdminNavbar() {
             <div className={`relative transition-all duration-300 ${isExpanded || isMobile ? "w-12 h-12" : "w-10 h-10"
               }`}>
               {/* Logo Container with Glow */}
-              <div className="absolute inset-0 bg-gradient-to-br from-[#f26522] to-[#d4541a] rounded-xl opacity-80 blur-md group-hover:opacity-100 transition-opacity"></div>
-              <div className="relative w-full h-full bg-gradient-to-br from-[#f26522] to-[#d4541a] rounded-xl flex items-center justify-center shadow-lg">
+              <div className="absolute inset-0 bg-gradient-primary-diagonal rounded-xl opacity-80 blur-md group-hover:opacity-100 transition-opacity"></div>
+              <div className="relative w-full h-full bg-gradient-primary-diagonal rounded-xl flex items-center justify-center shadow-lg">
                 <span className="text-white font-bold text-lg">S</span>
               </div>
             </div>
@@ -154,7 +154,7 @@ function AdminNavbar() {
                 onMouseEnter={() => setHoveredItem(item.path)}
                 onMouseLeave={() => setHoveredItem(null)}
                 className={`nav-item relative flex items-center gap-3 px-3 py-3 rounded-xl transition-all duration-200 group ${isActive(item.path)
-                    ? "bg-gradient-to-r from-[#f26522] to-[#d4541a] text-white shadow-lg shadow-orange-500/30"
+                    ? "sidebar-nav-active text-white"
                     : "text-slate-300 hover:bg-white/10 hover:text-white"
                   }`}
               >
@@ -222,7 +222,7 @@ function AdminNavbar() {
               onMouseLeave={() => setIsToggleHovered(false)}
               className={`group flex items-center gap-2 px-3 py-2.5 w-full rounded-xl transition-all duration-300 ${!isExpanded ? "justify-center" : ""
                 } ${isToggleHovered
-                  ? "bg-gradient-to-r from-[#f26522]/20 to-[#d4541a]/20 text-[#f26522] border border-[#f26522]/30"
+                  ? "bg-primary-ring text-primary border border-primary/30"
                   : "bg-white/5 hover:bg-white/10 text-slate-300 hover:text-white border border-transparent"
                 }`}
               title={isExpanded ? "Collapse Sidebar (Click to minimize)" : "Expand Sidebar (Click to expand)"}

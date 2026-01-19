@@ -85,7 +85,7 @@ function AdminOrders() {
             </div>
             <Link
               to="/admin/form"
-              className="inline-flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-[#f26522] to-[#d4541a] text-white rounded-xl font-semibold shadow-lg shadow-orange-500/25 hover:shadow-xl hover:shadow-orange-500/30 hover:-translate-y-0.5 transition-all duration-200"
+              className="inline-flex items-center gap-2 px-5 py-2.5 bg-gradient-primary text-white rounded-xl font-semibold shadow-primary hover:shadow-primary-hover hover:-translate-y-0.5 transition-all duration-200"
             >
               <IconLibrary.Plus size={18} color="white" strokeWidth={2} />
               New Order
@@ -123,7 +123,7 @@ function AdminOrders() {
                   placeholder="Search by order ID, customer, or tracking number..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full pl-11 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-700 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#f26522]/20 focus:border-[#f26522] focus:bg-white transition-all duration-200"
+                  className="w-full pl-11 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-700 placeholder:text-slate-400 focus:outline-none focus-ring-primary focus:border-primary focus:bg-white transition-all duration-200"
                 />
               </div>
 
@@ -135,7 +135,7 @@ function AdminOrders() {
                     onClick={() => setFilterStatus(status)}
                     className={`px-4 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 ${
                       filterStatus === status
-                        ? "bg-gradient-to-r from-[#f26522] to-[#d4541a] text-white shadow-md shadow-orange-500/25"
+                        ? "bg-gradient-primary text-white shadow-primary"
                         : "bg-slate-100 text-slate-600 hover:bg-slate-200"
                     }`}
                   >
@@ -153,7 +153,7 @@ function AdminOrders() {
               <select
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value)}
-                className="px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-700 font-medium hover:border-slate-300 focus:outline-none focus:ring-2 focus:ring-[#f26522]/20 focus:border-[#f26522] transition-all duration-200 cursor-pointer"
+                className="px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-700 font-medium hover:border-slate-300 focus:outline-none focus-ring-primary focus:border-primary transition-all duration-200 cursor-pointer"
               >
                 <option value="date">Sort by Date</option>
                 <option value="amount">Sort by Amount</option>
@@ -222,8 +222,8 @@ function AdminOrders() {
                                   onClick={() => setShowDetails(isExpanded ? null : order.id)}
                                   className={`p-2 rounded-lg transition-all duration-200 ${
                                     isExpanded
-                                      ? 'bg-[#f26522] text-white shadow-md'
-                                      : 'text-slate-400 hover:text-[#f26522] hover:bg-orange-50'
+                                      ? 'bg-primary text-white shadow-md'
+                                      : 'text-slate-400 hover:text-primary hover:bg-primary-50'
                                   }`}
                                   title={isExpanded ? "Hide Details" : "View Details"}
                                 >
@@ -271,7 +271,7 @@ function AdminOrders() {
                                         <IconLibrary.Eye size={16} color="currentColor" />
                                         Track Order
                                       </button>
-                                      <button className="flex-1 lg:flex-none px-4 py-2.5 bg-gradient-to-r from-[#f26522] to-[#d4541a] text-white rounded-xl text-sm font-semibold shadow-md hover:shadow-lg transition-all duration-200 flex items-center justify-center gap-2">
+                                      <button className="flex-1 lg:flex-none px-4 py-2.5 bg-gradient-primary text-white rounded-xl text-sm font-semibold shadow-md hover:shadow-lg transition-all duration-200 flex items-center justify-center gap-2">
                                         <IconLibrary.Edit size={16} color="white" />
                                         Edit Order
                                       </button>

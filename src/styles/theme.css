@@ -1,0 +1,150 @@
+/**
+ * Theme CSS Utility Classes
+ * Uses CSS custom properties defined in index.css
+ */
+
+/* ==========================================================================
+   Text Colors
+   ========================================================================== */
+
+.text-primary { color: var(--color-primary); }
+.text-primary-dark { color: var(--color-primary-dark); }
+.text-primary-light { color: var(--color-primary-light); }
+.text-secondary { color: var(--color-secondary); }
+.text-secondary-dark { color: var(--color-secondary-dark); }
+
+/* ==========================================================================
+   Background Colors
+   ========================================================================== */
+
+.bg-primary { background-color: var(--color-primary); }
+.bg-primary-dark { background-color: var(--color-primary-dark); }
+.bg-primary-light { background-color: var(--color-primary-light); }
+.bg-primary-50 { background-color: var(--color-primary-50); }
+.bg-primary-ring { background-color: var(--color-primary-ring); }
+
+.bg-secondary { background-color: var(--color-secondary); }
+.bg-secondary-dark { background-color: var(--color-secondary-dark); }
+.bg-secondary-light { background-color: var(--color-secondary-light); }
+.bg-secondary-50 { background-color: var(--color-secondary-50); }
+
+/* Gradient backgrounds */
+.bg-gradient-primary { background: var(--gradient-primary); }
+.bg-gradient-primary-vertical { background: var(--gradient-primary-vertical); }
+.bg-gradient-primary-diagonal { background: var(--gradient-primary-diagonal); }
+.bg-gradient-sidebar { background: var(--gradient-sidebar); }
+.bg-gradient-secondary { background: var(--gradient-secondary); }
+
+/* ==========================================================================
+   Border Colors
+   ========================================================================== */
+
+.border-primary { border-color: var(--color-primary); }
+.border-primary-ring { border-color: var(--color-primary-ring); }
+.border-secondary { border-color: var(--color-secondary); }
+
+/* ==========================================================================
+   Shadow Utilities
+   ========================================================================== */
+
+.shadow-primary { box-shadow: 0 4px 14px 0 var(--color-primary-shadow); }
+.shadow-primary-lg { box-shadow: 0 10px 25px -5px var(--color-primary-shadow); }
+.shadow-primary-hover { box-shadow: 0 6px 20px 0 var(--color-primary-shadow-hover); }
+
+/* ==========================================================================
+   Focus Ring
+   ========================================================================== */
+
+.ring-primary { --tw-ring-color: var(--color-primary-ring); }
+.focus-ring-primary:focus {
+  outline: none;
+  box-shadow: 0 0 0 4px var(--color-primary-ring);
+}
+
+/* ==========================================================================
+   Hover States
+   ========================================================================== */
+
+.hover\:text-primary:hover { color: var(--color-primary); }
+.hover\:text-primary-dark:hover { color: var(--color-primary-dark); }
+.hover\:bg-primary:hover { background-color: var(--color-primary); }
+.hover\:bg-primary-50:hover { background-color: var(--color-primary-50); }
+.hover\:bg-primary-ring:hover { background-color: var(--color-primary-ring); }
+.hover\:bg-secondary:hover { background-color: var(--color-secondary); }
+.hover\:bg-secondary-dark:hover { background-color: var(--color-secondary-dark); }
+.hover\:shadow-primary:hover { box-shadow: 0 4px 14px 0 var(--color-primary-shadow); }
+.hover\:shadow-primary-hover:hover { box-shadow: 0 6px 20px 0 var(--color-primary-shadow-hover); }
+.hover\:border-primary:hover { border-color: var(--color-primary); }
+
+/* ==========================================================================
+   Focus States
+   ========================================================================== */
+
+.focus\:ring-primary:focus { --tw-ring-color: var(--color-primary-ring); }
+.focus\:border-primary:focus { border-color: var(--color-primary); }
+
+/* ==========================================================================
+   Component Classes
+   ========================================================================== */
+
+/* Primary Button */
+.btn-primary {
+  background: var(--gradient-primary);
+  color: white;
+  box-shadow: 0 4px 14px 0 var(--color-primary-shadow);
+  transition: all 0.2s ease;
+}
+.btn-primary:hover {
+  box-shadow: 0 6px 20px 0 var(--color-primary-shadow-hover);
+  transform: translateY(-1px);
+}
+
+/* Outline Button */
+.btn-outline-primary {
+  background: transparent;
+  color: var(--color-primary);
+  border: 2px solid var(--color-primary);
+  transition: all 0.2s ease;
+}
+.btn-outline-primary:hover {
+  background: var(--color-primary-ring);
+}
+
+/* Ghost Button */
+.btn-ghost-primary {
+  background: transparent;
+  color: var(--color-primary);
+  transition: all 0.2s ease;
+}
+.btn-ghost-primary:hover {
+  background: var(--color-primary-ring);
+}
+
+/* Link styling */
+.link-primary {
+  color: var(--color-primary);
+  transition: color 0.2s ease;
+}
+.link-primary:hover {
+  color: var(--color-primary-dark);
+}
+
+/* Input focus */
+.input-focus-primary:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 4px var(--color-primary-ring);
+}
+
+/* Sidebar Navigation */
+.sidebar-nav-active {
+  background: var(--gradient-primary);
+  box-shadow: 0 10px 15px -3px var(--color-primary-shadow);
+}
+
+/* Badge */
+.badge-primary {
+  background-color: var(--color-primary);
+  color: white;
+}
+

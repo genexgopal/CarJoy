@@ -70,7 +70,7 @@ function AdminBilling() {
           <div className="bg-white border border-slate-100 rounded-2xl overflow-hidden">
             <div className="px-6 py-6 border-b border-slate-100 flex justify-between items-center">
               <h2 className="text-xl font-black text-slate-900">Recent Invoices</h2>
-              <button className="px-6 py-2 bg-[#f26522] text-white rounded-lg font-bold hover:bg-[#d4541a] transition-all">
+              <button className="px-6 py-2 bg-primary text-white rounded-lg font-bold hover:bg-primary-dark transition-all">
                 + New Invoice
               </button>
             </div>

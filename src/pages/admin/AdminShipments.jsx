@@ -68,13 +68,13 @@ function AdminShipments() {
                   placeholder="Search by ID or tracking number..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full px-4 py-3 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#f26522] focus:border-transparent"
+                  className="w-full px-4 py-3 border border-slate-200 rounded-lg focus:outline-none focus-ring-primary focus:border-transparent"
                 />
               </div>
               <select
                 value={filterCourier}
                 onChange={(e) => setFilterCourier(e.target.value)}
-                className="px-4 py-3 border border-slate-200 rounded-lg text-slate-700 font-medium hover:border-slate-300 focus:outline-none focus:ring-2 focus:ring-[#f26522]"
+                className="px-4 py-3 border border-slate-200 rounded-lg text-slate-700 font-medium hover:border-slate-300 focus:outline-none focus-ring-primary"
               >
                 <option value="All">All Couriers</option>
                 <option value="Delhivery">Delhivery</option>

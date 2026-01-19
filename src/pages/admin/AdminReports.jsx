@@ -53,7 +53,7 @@ function AdminReports() {
                   onClick={() => setReportType("monthly")}
                   className={`px-6 py-2 rounded-lg font-bold transition-all ${
                     reportType === "monthly"
-                      ? "bg-[#f26522] text-white"
+                      ? "bg-primary text-white"
                       : "bg-slate-100 text-slate-700 hover:bg-slate-200"
                   }`}
                 >
@@ -63,7 +63,7 @@ function AdminReports() {
                   onClick={() => setReportType("weekly")}
                   className={`px-6 py-2 rounded-lg font-bold transition-all ${
                     reportType === "weekly"
-                      ? "bg-[#f26522] text-white"
+                      ? "bg-primary text-white"
                       : "bg-slate-100 text-slate-700 hover:bg-slate-200"
                   }`}
                 >
@@ -73,7 +73,7 @@ function AdminReports() {
                   onClick={() => setReportType("custom")}
                   className={`px-6 py-2 rounded-lg font-bold transition-all ${
                     reportType === "custom"
-                      ? "bg-[#f26522] text-white"
+                      ? "bg-primary text-white"
                       : "bg-slate-100 text-slate-700 hover:bg-slate-200"
                   }`}
                 >
@@ -93,7 +93,7 @@ function AdminReports() {
                   ))}
                 </select>
               )}
-              <button className="ml-auto px-6 py-2 bg-[#f26522] text-white rounded-lg font-bold hover:bg-[#d4541a] transition-all">
+              <button className="ml-auto px-6 py-2 bg-primary text-white rounded-lg font-bold hover:bg-primary-dark transition-all">
                 Download Report
               </button>
             </div>
@@ -134,7 +134,7 @@ function AdminReports() {
                   <p className="text-slate-600 text-sm mb-4">{report.description}</p>
                   <div className="flex justify-between items-center">
                     <p className="text-xs text-slate-500">{report.date}</p>
-                    <button className="px-4 py-2 bg-[#f26522] text-white rounded-lg text-xs font-bold hover:bg-[#d4541a] transition-all">
+                    <button className="px-4 py-2 bg-primary text-white rounded-lg text-xs font-bold hover:bg-primary-dark transition-all">
                       View
                     </button>
                   </div>
