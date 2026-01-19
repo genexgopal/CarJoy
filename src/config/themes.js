@@ -150,15 +150,15 @@ export const themes = {
     name: 'Clean White',
     description: 'Minimal white theme with dark text for maximum readability',
     colors: {
-      // Primary Colors (Subtle Blue Accent)
-      primary: '#3b82f6',
-      primaryDark: '#2563eb',
-      primaryLight: '#60a5fa',
-      primary50: '#eff6ff',
-      primary100: '#dbeafe',
-      primaryRing: 'rgba(59, 130, 246, 0.15)',
-      primaryShadow: 'rgba(59, 130, 246, 0.20)',
-      primaryShadowHover: 'rgba(59, 130, 246, 0.30)',
+      // Primary Colors (Purple Accent)
+      primary: '#735dff',
+      primaryDark: '#5b45e0',
+      primaryLight: '#9182ff',
+      primary50: '#f5f3ff',
+      primary100: '#ede9fe',
+      primaryRing: 'rgba(115, 93, 255, 0.15)',
+      primaryShadow: 'rgba(115, 93, 255, 0.20)',
+      primaryShadowHover: 'rgba(115, 93, 255, 0.30)',
       // Secondary Colors (Dark Gray for Text)
       secondary: '#1f2937',
       secondaryDark: '#111827',
@@ -173,10 +173,10 @@ export const themes = {
       // Sidebar Text Colors (for light/white sidebar - dark text)
       sidebarText: '#1f2937',
       sidebarTextMuted: '#6b7280',
-      sidebarHoverBg: 'rgba(59, 130, 246, 0.08)',
+      sidebarHoverBg: 'rgba(115, 93, 255, 0.08)',
       sidebarBorder: '#e5e7eb',
     },
-    preview: ['#3b82f6', '#ffffff'],
+    preview: ['#735dff', '#ffffff'],
   },
 };
 
