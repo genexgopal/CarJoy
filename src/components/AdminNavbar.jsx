@@ -3,10 +3,15 @@ import { Link, useLocation } from "react-router-dom";
 import { IconLibrary } from "./IconLibrary.jsx";
 
 function AdminNavbar() {
-  const [isExpanded, setIsExpanded] = useState(true);
+  // Initialize isExpanded from sessionStorage (persist across page navigation)
+  const [isExpanded, setIsExpanded] = useState(() => {
+    const stored = sessionStorage.getItem('sidebarExpanded');
+    return stored === null ? true : stored === 'true';
+  });
   const [hoveredItem, setHoveredItem] = useState(null);
   const [isMobile, setIsMobile] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [isToggleHovered, setIsToggleHovered] = useState(false);
   const location = useLocation();
 
   const isActive = (path) => location.pathname === path || (path !== "/admin" && location.pathname.startsWith(path));
@@ -24,9 +29,17 @@ function AdminNavbar() {
   // Check for mobile viewport
   useEffect(() => {
     const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768);
-      if (window.innerWidth < 768) {
+      const mobile = window.innerWidth < 768;
+      setIsMobile(mobile);
+      // On mobile, always collapse; on desktop, respect the stored preference
+      if (mobile) {
         setIsExpanded(false);
+      } else {
+        // Restore desktop preference from storage
+        const stored = sessionStorage.getItem('sidebarExpanded');
+        if (stored !== null) {
+          setIsExpanded(stored === 'true');
+        }
       }
     };
     checkMobile();
@@ -34,21 +47,32 @@ function AdminNavbar() {
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
-  // Store state in session storage so pages can access it
+  // Store state in session storage so pages can access it (desktop only)
   useEffect(() => {
-    sessionStorage.setItem('sidebarExpanded', isExpanded);
-  }, [isExpanded]);
+    if (!isMobile) {
+      sessionStorage.setItem('sidebarExpanded', isExpanded);
+    }
+  }, [isExpanded, isMobile]);
 
   // Close mobile menu when route changes
   useEffect(() => {
     setMobileMenuOpen(false);
   }, [location.pathname]);
 
+  // Toggle sidebar with keyboard support
   const toggleSidebar = () => {
     if (isMobile) {
       setMobileMenuOpen(!mobileMenuOpen);
     } else {
       setIsExpanded(!isExpanded);
+    }
+  };
+
+  // Handle keyboard navigation for toggle button
+  const handleToggleKeyDown = (e) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      toggleSidebar();
     }
   };
 
@@ -80,24 +104,23 @@ function AdminNavbar() {
 
       {/* Sidebar */}
       <div
-        className={`bg-gradient-to-b from-[#001a4d] via-[#002855] to-[#003366] text-white h-screen fixed left-0 top-0 flex flex-col z-[56] shadow-2xl overflow-hidden ${
-          isMobile
+        className={`bg-gradient-to-b from-[#001a4d] via-[#002855] to-[#003366] text-white h-screen fixed left-0 top-0 flex flex-col z-[56] shadow-2xl overflow-hidden ${isMobile
             ? mobileMenuOpen ? 'translate-x-0 sidebar-animate' : '-translate-x-full'
             : ''
-        }`}
+          }
+        ${isExpanded ? 'expanded-menu' : 'collapsed-menu'}
+        `}
         style={{
           width: isMobile ? "280px" : sidebarWidth,
           transition: isMobile ? 'transform 0.3s ease' : 'width 0.3s cubic-bezier(0.4, 0, 0.2, 1)'
         }}
       >
         {/* Logo Section */}
-        <div className={`py-5 border-b border-white/10 transition-all duration-300 ${
-          isExpanded || isMobile ? "px-5" : "px-3"
-        }`}>
+        <div className={`py-5 border-b border-white/10 transition-all duration-300 ${isExpanded || isMobile ? "px-5" : "px-3"
+          }`}>
           <Link to="/admin" className="flex items-center gap-3 group">
-            <div className={`relative transition-all duration-300 ${
-              isExpanded || isMobile ? "w-12 h-12" : "w-10 h-10"
-            }`}>
+            <div className={`relative transition-all duration-300 ${isExpanded || isMobile ? "w-12 h-12" : "w-10 h-10"
+              }`}>
               {/* Logo Container with Glow */}
               <div className="absolute inset-0 bg-gradient-to-br from-[#f26522] to-[#d4541a] rounded-xl opacity-80 blur-md group-hover:opacity-100 transition-opacity"></div>
               <div className="relative w-full h-full bg-gradient-to-br from-[#f26522] to-[#d4541a] rounded-xl flex items-center justify-center shadow-lg">
@@ -130,16 +153,14 @@ function AdminNavbar() {
                 title={!isExpanded && !isMobile ? item.label : ""}
                 onMouseEnter={() => setHoveredItem(item.path)}
                 onMouseLeave={() => setHoveredItem(null)}
-                className={`nav-item relative flex items-center gap-3 px-3 py-3 rounded-xl transition-all duration-200 group ${
-                  isActive(item.path)
+                className={`nav-item relative flex items-center gap-3 px-3 py-3 rounded-xl transition-all duration-200 group ${isActive(item.path)
                     ? "bg-gradient-to-r from-[#f26522] to-[#d4541a] text-white shadow-lg shadow-orange-500/30"
                     : "text-slate-300 hover:bg-white/10 hover:text-white"
-                }`}
+                  }`}
               >
                 {/* Icon */}
-                <div className={`flex-shrink-0 transition-transform duration-200 ${
-                  hoveredItem === item.path && !isActive(item.path) ? 'scale-110' : ''
-                }`}>
+                <div className={`flex-shrink-0 transition-transform duration-200 ${hoveredItem === item.path && !isActive(item.path) ? 'scale-110' : ''
+                  }`}>
                   <item.icon
                     size={22}
                     color="currentColor"
@@ -184,9 +205,8 @@ function AdminNavbar() {
           {/* Settings Link */}
           <Link
             to="/admin/settings"
-            className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-300 hover:bg-white/10 hover:text-white transition-all duration-200 ${
-              !isExpanded && !isMobile ? "justify-center w-12" : ""
-            }`}
+            className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-300 hover:bg-white/10 hover:text-white transition-all duration-200 ${!isExpanded && !isMobile ? "justify-center w-12" : ""
+              }`}
             title="Settings"
           >
             <IconLibrary.Settings size={20} color="currentColor" strokeWidth={2} />
@@ -197,23 +217,51 @@ function AdminNavbar() {
           {!isMobile && (
             <button
               onClick={toggleSidebar}
-              className={`flex items-center gap-2 px-3 py-2.5 w-full rounded-xl bg-white/5 hover:bg-white/10 text-slate-300 hover:text-white transition-all duration-200 ${
-                !isExpanded ? "justify-center" : ""
-              }`}
-              title={isExpanded ? "Collapse Sidebar" : "Expand Sidebar"}
+              onKeyDown={handleToggleKeyDown}
+              onMouseEnter={() => setIsToggleHovered(true)}
+              onMouseLeave={() => setIsToggleHovered(false)}
+              className={`group flex items-center gap-2 px-3 py-2.5 w-full rounded-xl transition-all duration-300 ${!isExpanded ? "justify-center" : ""
+                } ${isToggleHovered
+                  ? "bg-gradient-to-r from-[#f26522]/20 to-[#d4541a]/20 text-[#f26522] border border-[#f26522]/30"
+                  : "bg-white/5 hover:bg-white/10 text-slate-300 hover:text-white border border-transparent"
+                }`}
+              title={isExpanded ? "Collapse Sidebar (Click to minimize)" : "Expand Sidebar (Click to expand)"}
+              aria-label={isExpanded ? "Collapse sidebar navigation" : "Expand sidebar navigation"}
+              aria-expanded={isExpanded}
+              role="button"
+              tabIndex={0}
             >
-              <div className={`transition-transform duration-300 ${isExpanded ? '' : 'rotate-180'}`}>
-                <IconLibrary.ChevronLeft size={18} color="currentColor" />
+              {/* Animated Icon Container */}
+              <div className={`relative flex items-center justify-center w-6 h-6 transition-all duration-300 ${isToggleHovered ? 'scale-110' : ''
+                }`}>
+                {/* Double Chevron for better visual */}
+                <div className={`flex items-center transition-transform duration-300 ease-out ${isExpanded ? '' : 'rotate-180'
+                  }`}>
+                  <IconLibrary.ChevronLeft size={18} color="currentColor" strokeWidth={2.5} />
+                </div>
               </div>
-              {isExpanded && <span className="text-sm font-medium">Collapse</span>}
+
+              {/* Label with animation */}
+              {isExpanded && (
+                <span className="text-sm font-medium overflow-hidden whitespace-nowrap transition-all duration-200">
+                  {isToggleHovered ? "Click to collapse" : "Collapse"}
+                </span>
+              )}
+
+              {/* Tooltip for collapsed state */}
+              {!isExpanded && isToggleHovered && (
+                <div className="absolute left-full ml-3 px-3 py-2 bg-slate-900 text-white text-sm font-medium rounded-lg shadow-xl whitespace-nowrap z-50">
+                  Click to expand
+                  <div className="absolute left-0 top-1/2 -translate-x-1 -translate-y-1/2 w-2 h-2 bg-slate-900 rotate-45"></div>
+                </div>
+              )}
             </button>
           )}
 
           {/* Logout Button */}
           <button
-            className={`flex items-center gap-2 px-3 py-2.5 w-full rounded-xl bg-red-500/10 hover:bg-red-500/20 text-red-400 hover:text-red-300 transition-all duration-200 ${
-              !isExpanded && !isMobile ? "justify-center" : ""
-            }`}
+            className={`flex items-center gap-2 px-3 py-2.5 w-full rounded-xl bg-red-500/10 hover:bg-red-500/20 text-red-400 hover:text-red-300 transition-all duration-200 ${!isExpanded && !isMobile ? "justify-center" : ""
+              }`}
             title="Logout"
           >
             <IconLibrary.LogOut size={18} color="currentColor" />

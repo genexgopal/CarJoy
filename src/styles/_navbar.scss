@@ -72,3 +72,12 @@
 .overlay-animate {
   animation: fadeIn 0.2s ease-out;
 }
+
+
+.expanded-menu {}
+
+.collapsed-menu {
+  .nav-item-tooltip {
+    display: none;
+  }
+}
