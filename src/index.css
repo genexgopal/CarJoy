@@ -10,41 +10,41 @@
    ========================================================================== */
 
 :root {
-  /* ===== Primary Colors (Orange) ===== */
-  --color-primary: #f26522;
-  --color-primary-dark: #d4541a;
-  --color-primary-light: #ff8533;
-  --color-primary-50: #fff7ed;
-  --color-primary-100: #ffedd5;
-  --color-primary-ring: rgba(242, 101, 34, 0.15);
-  --color-primary-shadow: rgba(242, 101, 34, 0.25);
-  --color-primary-shadow-hover: rgba(242, 101, 34, 0.35);
+  /* ===== Primary Colors (Purple - Clean White Theme) ===== */
+  --color-primary: #735dff;
+  --color-primary-dark: #5b45e0;
+  --color-primary-light: #9182ff;
+  --color-primary-50: #f5f3ff;
+  --color-primary-100: #ede9fe;
+  --color-primary-ring: rgba(115, 93, 255, 0.15);
+  --color-primary-shadow: rgba(115, 93, 255, 0.20);
+  --color-primary-shadow-hover: rgba(115, 93, 255, 0.30);
 
-  /* ===== Secondary Colors (Navy Blue) ===== */
-  --color-secondary: #003366;
-  --color-secondary-dark: #001a4d;
-  --color-secondary-light: #004080;
-  --color-secondary-50: #e6f0ff;
-  --color-secondary-100: #cce0ff;
-  --color-secondary-ring: rgba(0, 51, 102, 0.15);
+  /* ===== Secondary Colors (Dark Gray - Clean White Theme) ===== */
+  --color-secondary: #1f2937;
+  --color-secondary-dark: #111827;
+  --color-secondary-light: #374151;
+  --color-secondary-50: #ffffff;
+  --color-secondary-100: #f9fafb;
+  --color-secondary-ring: rgba(31, 41, 55, 0.10);
 
-  /* ===== Sidebar Gradient Colors ===== */
-  --sidebar-gradient-start: #001a4d;
-  --sidebar-gradient-mid: #002855;
-  --sidebar-gradient-end: #003366;
+  /* ===== Sidebar Gradient Colors (White/Light Gray - Clean White Theme) ===== */
+  --sidebar-gradient-start: #ffffff;
+  --sidebar-gradient-mid: #f9fafb;
+  --sidebar-gradient-end: #f3f4f6;
 
-  /* ===== Sidebar Text Colors ===== */
-  --sidebar-text: #ffffff;
-  --sidebar-text-muted: #94a3b8;
-  --sidebar-hover-bg: rgba(255, 255, 255, 0.1);
-  --sidebar-border: rgba(255, 255, 255, 0.1);
+  /* ===== Sidebar Text Colors (Dark Text for White Sidebar) ===== */
+  --sidebar-text: #1f2937;
+  --sidebar-text-muted: #6b7280;
+  --sidebar-hover-bg: rgba(115, 93, 255, 0.08);
+  --sidebar-border: #e5e7eb;
 
   /* ===== Computed Gradients ===== */
-  --gradient-primary: linear-gradient(to right, var(--color-primary), var(--color-primary-dark));
-  --gradient-primary-vertical: linear-gradient(to bottom, var(--color-primary), var(--color-primary-dark));
-  --gradient-primary-diagonal: linear-gradient(to bottom right, var(--color-primary), var(--color-primary-dark));
-  --gradient-sidebar: linear-gradient(to bottom, var(--sidebar-gradient-start), var(--sidebar-gradient-mid), var(--sidebar-gradient-end));
-  --gradient-secondary: linear-gradient(to right, var(--color-secondary), var(--color-secondary-dark));
+  --gradient-primary: linear-gradient(to right, #735dff, #5b45e0);
+  --gradient-primary-vertical: linear-gradient(to bottom, #735dff, #5b45e0);
+  --gradient-primary-diagonal: linear-gradient(to bottom right, #735dff, #5b45e0);
+  --gradient-sidebar: linear-gradient(to bottom, #ffffff, #f9fafb, #f3f4f6);
+  --gradient-secondary: linear-gradient(to right, #1f2937, #111827);
 }
 
 /* ==========================================================================

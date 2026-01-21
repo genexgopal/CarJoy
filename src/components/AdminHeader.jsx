@@ -1,19 +1,13 @@
 import React, { useState, useRef, useEffect } from "react";
 import { IconLibrary } from "./IconLibrary.jsx";
-import { useTheme } from "../context/ThemeContext.jsx";
 
 function AdminHeader() {
   const [showDropdown, setShowDropdown] = useState(false);
   const [showNotifications, setShowNotifications] = useState(false);
-  const [showThemeDropdown, setShowThemeDropdown] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [searchFocused, setSearchFocused] = useState(false);
   const dropdownRef = useRef(null);
   const notificationRef = useRef(null);
-  const themeDropdownRef = useRef(null);
-
-  // Theme context
-  const { currentTheme, currentThemeId, setTheme, availableThemes } = useTheme();
 
   // Mock user data
   const user = {
@@ -41,9 +35,6 @@ function AdminHeader() {
       }
       if (notificationRef.current && !notificationRef.current.contains(event.target)) {
         setShowNotifications(false);
-      }
-      if (themeDropdownRef.current && !themeDropdownRef.current.contains(event.target)) {
-        setShowThemeDropdown(false);
       }
     };
 
@@ -194,91 +185,6 @@ function AdminHeader() {
                   <button className="w-full py-2 text-sm font-semibold text-primary hover:text-primary-dark transition-colors">
                     View All Notifications
                   </button>
-                </div>
-              </div>
-            )}
-          </div>
-
-          {/* Theme Switcher */}
-          <div className="relative" ref={themeDropdownRef}>
-            <button
-              onClick={() => setShowThemeDropdown(!showThemeDropdown)}
-              className={`flex items-center gap-2 px-3 py-2 rounded-xl transition-all duration-200 ${
-                showThemeDropdown ? 'bg-slate-100' : 'hover:bg-slate-50'
-              }`}
-              title="Switch Theme"
-            >
-              {/* Theme Preview Colors */}
-              <div className="flex items-center gap-1">
-                <div
-                  className="w-4 h-4 rounded-full border-2 border-white shadow-sm"
-                  style={{ backgroundColor: currentTheme.preview[0] }}
-                ></div>
-                <div
-                  className="w-4 h-4 rounded-full border-2 border-white shadow-sm -ml-2"
-                  style={{ backgroundColor: currentTheme.preview[1] }}
-                ></div>
-              </div>
-              <span className="hidden md:inline text-sm font-medium text-slate-700">
-                {currentTheme.name}
-              </span>
-              <IconLibrary.ChevronDown
-                size={14}
-                color="#94a3b8"
-                className={`transition-transform duration-200 ${showThemeDropdown ? 'rotate-180' : ''}`}
-              />
-            </button>
-
-            {/* Theme Dropdown */}
-            {showThemeDropdown && (
-              <div className="absolute right-0 mt-3 w-64 bg-white border border-slate-200 rounded-2xl shadow-2xl z-50 overflow-hidden">
-                {/* Header */}
-                <div className="px-4 py-3 border-b border-slate-100">
-                  <h3 className="text-sm font-bold text-slate-800">Choose Theme</h3>
-                  <p className="text-xs text-slate-500">Select a color scheme</p>
-                </div>
-
-                {/* Theme Options */}
-                <div className="p-2">
-                  {availableThemes.map((theme) => (
-                    <button
-                      key={theme.id}
-                      onClick={() => {
-                        setTheme(theme.id);
-                        setShowThemeDropdown(false);
-                      }}
-                      className={`w-full flex items-center gap-3 px-3 py-3 rounded-xl transition-all duration-200 group ${
-                        currentThemeId === theme.id
-                          ? 'bg-slate-100'
-                          : 'hover:bg-slate-50'
-                      }`}
-                    >
-                      {/* Theme Preview Colors */}
-                      <div className="flex items-center">
-                        <div
-                          className="w-6 h-6 rounded-lg border-2 border-white shadow-md"
-                          style={{ backgroundColor: theme.preview[0] }}
-                        ></div>
-                        <div
-                          className="w-6 h-6 rounded-lg border-2 border-white shadow-md -ml-2"
-                          style={{ backgroundColor: theme.preview[1] }}
-                        ></div>
-                      </div>
-
-                      {/* Theme Info */}
-                      <div className="flex-1 text-left">
-                        <p className="text-sm font-semibold text-slate-800">{theme.name}</p>
-                        <p className="text-[10px] text-slate-500">{theme.description}</p>
-                      </div>
-
-                      {/* Selected Checkmark */}
-                      {currentThemeId === theme.id && (
-                        <div className="w-5 h-5 bg-primary rounded-full flex items-center justify-center">
-                          <IconLibrary.Check size={12} color="#fff" strokeWidth={3} />
-                        </div>
-                      )}
-                    </button>
-                  ))}
                 </div>
               </div>
             )}

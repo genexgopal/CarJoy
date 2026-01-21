@@ -181,7 +181,7 @@ export const themes = {
 };
 
 // Default theme
-export const defaultTheme = 'expressOrange';
+export const defaultTheme = 'cleanWhite';
 
 // Theme storage key
 export const THEME_STORAGE_KEY = 'shipmyparcel-admin-theme';
