@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
+import loginBg from "../assets/images/login_bg.jpg";
 
 const LoginPage = ({ onBack, embedded = false }) => {
-    const [username, setUsername] = useState("");
+    const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [rememberMe, setRememberMe] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
@@ -27,7 +28,7 @@ const LoginPage = ({ onBack, embedded = false }) => {
             const response = await fetch(`${API_URL}/api/login`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ email: username, password })
+                body: JSON.stringify({ email, password })
             });
 
             const data = await response.json();
@@ -48,18 +49,9 @@ const LoginPage = ({ onBack, embedded = false }) => {
         }
     };
 
-    // Lock icon component
-    const LockIcon = () => (
-        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect x="3" y="11" width="18" height="11" rx="2" stroke="#735dff" strokeWidth="2" />
-            <path d="M7 11V7C7 4.23858 9.23858 2 12 2C14.7614 2 17 4.23858 17 7V11" stroke="#735dff" strokeWidth="2" strokeLinecap="round" />
-            <circle cx="12" cy="16" r="1.5" fill="#735dff" />
-        </svg>
-    );
-
-    // Eye icon for password visibility
+    // Eye icon for password visibility toggle
     const EyeIcon = ({ visible }) => (
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             {visible ? (
                 <>
                     <path d="M1 12C1 12 5 4 12 4C19 4 23 12 23 12C23 12 19 20 12 20C5 20 1 12 1 12Z" stroke="#9ca3af" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
@@ -74,24 +66,43 @@ const LoginPage = ({ onBack, embedded = false }) => {
         </svg>
     );
 
+    // Social icons
+    const LinkedInIcon = () => (
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+        </svg>
+    );
+
+    const TwitterIcon = () => (
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
+        </svg>
+    );
+
+    const FacebookIcon = () => (
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+        </svg>
+    );
+
     // Embedded mode - simple form for use inside LandingPage card
     if (embedded) {
         return (
             <div className="w-full">
                 <form onSubmit={handleSubmit} className="space-y-5">
-                    {/* Username Field */}
+                    {/* Email Field */}
                     <div>
                         <label className="block text-sm font-medium text-slate-700 mb-1 ml-1">
-                            User Name
+                            Email Address
                         </label>
                         <div className="relative">
                             <input
-                                type="text"
+                                type="email"
                                 className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:border-transparent outline-none transition-all placeholder:text-gray-400 text-sm"
                                 style={{ '--tw-ring-color': 'var(--color-primary)' }}
-                                placeholder="Enter User Name"
-                                value={username}
-                                onChange={(e) => setUsername(e.target.value)}
+                                placeholder="Test@gmail.com"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
                                 required
                             />
                         </div>
@@ -106,9 +117,9 @@ const LoginPage = ({ onBack, embedded = false }) => {
                             <a
                                 href="#"
                                 className="text-xs font-semibold transition-colors"
-                                style={{ color: '#f97316' }}
+                                style={{ color: 'var(--color-primary)' }}
                             >
-                                Forget password ?
+                                Forgot password?
                             </a>
                         </div>
                         <div className="relative">
@@ -116,7 +127,7 @@ const LoginPage = ({ onBack, embedded = false }) => {
                                 type={showPassword ? "text" : "password"}
                                 className="w-full px-4 py-3 pr-10 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:border-transparent outline-none transition-all placeholder:text-gray-400 text-sm"
                                 style={{ '--tw-ring-color': 'var(--color-primary)' }}
-                                placeholder="password"
+                                placeholder="••••••••"
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
                                 required
@@ -142,7 +153,7 @@ const LoginPage = ({ onBack, embedded = false }) => {
                             style={{ accentColor: 'var(--color-primary)' }}
                         />
                         <label htmlFor="remember-embedded" className="text-sm text-gray-600">
-                            Remember password ?
+                            Remember password
                         </label>
                     </div>
 
@@ -161,7 +172,7 @@ const LoginPage = ({ onBack, embedded = false }) => {
                             <span>Signing in...</span>
                         ) : (
                             <>
-                                <span>Login to My Account</span>
+                                <span>Sign in</span>
                                 <span className="material-icons text-sm">arrow_forward</span>
                             </>
                         )}
@@ -175,314 +186,204 @@ const LoginPage = ({ onBack, embedded = false }) => {
                     </div>
                     <div className="relative flex justify-center text-sm">
                         <span className="px-4 bg-white text-gray-400 text-xs font-medium">
-                            OR Signin With
+                            Or Sign in with
                         </span>
                     </div>
                 </div>
 
                 {/* Social Buttons */}
                 <div className="flex justify-center gap-3">
-                    <button className="w-10 h-10 rounded-full bg-blue-500 flex items-center justify-center hover:bg-blue-600 transition-colors">
-                        <span className="text-white text-sm font-bold">G</span>
+                    <button type="button" className="flex items-center gap-2 px-4 py-2 border border-gray-200 rounded-md hover:bg-gray-50 transition-colors text-sm text-gray-600">
+                        <LinkedInIcon /> Linkedin
                     </button>
-                    <button className="w-10 h-10 rounded-full bg-orange-500 flex items-center justify-center hover:bg-orange-600 transition-colors">
-                        <span className="text-white text-sm">✉</span>
+                    <button type="button" className="flex items-center gap-2 px-4 py-2 border border-gray-200 rounded-md hover:bg-gray-50 transition-colors text-sm text-gray-600">
+                        <TwitterIcon /> twitter
                     </button>
-                    <button className="w-10 h-10 rounded-full bg-green-500 flex items-center justify-center hover:bg-green-600 transition-colors">
-                        <span className="text-white text-sm">📞</span>
+                    <button type="button" className="flex items-center gap-2 px-4 py-2 border border-gray-200 rounded-md hover:bg-gray-50 transition-colors text-sm text-gray-600">
+                        <FacebookIcon /> facebook
                     </button>
                 </div>
 
                 {/* Sign Up Link */}
                 <p className="text-center mt-6 text-sm text-gray-500">
-                    Dont have an account?{" "}
-                    <Link to="/register" className="font-semibold text-blue-600 hover:underline">
-                        Sign Up
+                    Don't have account?{" "}
+                    <Link to="/register" className="font-semibold hover:underline" style={{ color: 'var(--color-primary)' }}>
+                        Create Account
                     </Link>
                 </p>
             </div>
         );
     }
 
-    // Full page two-column layout matching the screenshot design
+    // Full page centered layout matching the screenshot design
     return (
-        <div className="min-h-screen flex flex-col md:flex-row overflow-hidden relative">
-            {/* CSS Keyframe animations */}
-            <style>{`
-                @keyframes float {
-                    0%, 100% { transform: translateY(0px) rotate(0deg); }
-                    50% { transform: translateY(-20px) rotate(5deg); }
-                }
-                @keyframes float-delayed {
-                    0%, 100% { transform: translateY(0px) rotate(0deg); }
-                    50% { transform: translateY(-15px) rotate(-5deg); }
-                }
-                @keyframes glow {
-                    0%, 100% { box-shadow: 0 0 5px rgba(255,255,255,0.3); }
-                    50% { box-shadow: 0 0 20px rgba(255,255,255,0.6), 0 0 30px rgba(255,255,255,0.4); }
-                }
-                @keyframes slide-in {
-                    0% { opacity: 0; transform: translateX(-10px); }
-                    100% { opacity: 1; transform: translateX(0); }
-                }
-                @keyframes pulse-subtle {
-                    0%, 100% { opacity: 0.5; }
-                    50% { opacity: 0.8; }
-                }
-                .animate-float { animation: float 6s ease-in-out infinite; }
-                .animate-float-delayed { animation: float-delayed 8s ease-in-out infinite; }
-                .animate-glow { animation: glow 2s ease-in-out infinite; }
-                .animate-slide-in { animation: slide-in 0.3s ease-out forwards; }
-                .animate-pulse-subtle { animation: pulse-subtle 3s ease-in-out infinite; }
-            `}</style>
-
-            {/* Background pattern - diagonal lines */}
-            <div className="absolute inset-0 pointer-events-none overflow-hidden">
-                <div className="absolute top-0 left-0 w-full h-full opacity-[0.03]"
-                    style={{
-                        backgroundImage: `repeating-linear-gradient(
-                            45deg,
-                            #735dff 0px,
-                            #735dff 1px,
-                            transparent 1px,
-                            transparent 20px
-                        )`
-                    }}
-                ></div>
-            </div>
-
-            {/* --- LEFT SIDE: THE BRAND PANEL --- */}
-            <div className="hidden md:flex w-full md:w-[45%] relative overflow-hidden flex-col justify-between p-8"
-                style={{
-                    background: 'linear-gradient(135deg, #735dff 0%, #5b45e0 50%, #4a37c9 100%)'
-                }}
-            >
-                {/* Animated floating background elements */}
-                <div className="absolute inset-0 overflow-hidden pointer-events-none">
-                    {/* Floating circles */}
-                    <div className="absolute top-20 left-10 w-32 h-32 bg-white/5 rounded-full animate-float blur-xl"></div>
-                    <div className="absolute bottom-32 right-10 w-24 h-24 bg-white/5 rounded-full animate-float-delayed blur-lg"></div>
-                    <div className="absolute top-1/2 left-1/4 w-16 h-16 bg-white/5 rounded-full animate-float blur-md" style={{ animationDelay: '1s' }}></div>
-                    <div className="absolute top-1/3 right-1/4 w-20 h-20 bg-purple-300/10 rounded-full animate-float-delayed blur-lg" style={{ animationDelay: '2s' }}></div>
-
-                    {/* Diagonal pattern overlay */}
-                    <div className="absolute inset-0 opacity-10"
-                        style={{
-                            backgroundImage: `repeating-linear-gradient(
-                                45deg,
-                                transparent 0px,
-                                transparent 10px,
-                                rgba(255,255,255,0.1) 10px,
-                                rgba(255,255,255,0.1) 20px
-                            )`
-                        }}
-                    ></div>
-                </div>
-
-                {/* Top content */}
-                <div className="relative z-10">
-                    {/* Interactive Logo */}
+        <div
+            className="min-h-screen flex flex-col items-center justify-center px-4 py-8 relative"
+            style={{
+                backgroundImage: `url(${loginBg})`,
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+                backgroundRepeat: 'no-repeat'
+            }}
+        >
+            {/* Loading overlay */}
+            {isLoading && (
+                <div className="absolute inset-0 bg-white/80 backdrop-blur-sm z-50 flex flex-col items-center justify-center">
                     <div
-                        className="flex items-center space-x-3 cursor-pointer mb-12 group w-fit"
-                        onClick={handleBack}
-                    >
-                        <div className="w-10 h-10 bg-white/20 rounded-xl flex items-center justify-center transition-all duration-300 group-hover:scale-110 group-hover:bg-white/30 group-hover:shadow-lg group-hover:shadow-white/20 animate-glow">
-                            <span className="text-white font-bold text-lg transition-transform duration-300 group-hover:scale-110">S</span>
-                        </div>
-                        <div className="flex flex-col">
-                            <span className="text-white text-lg font-semibold transition-all duration-300 group-hover:tracking-wider">ShipMyParcel</span>
-                            <span className="text-purple-200/60 text-xs opacity-0 group-hover:opacity-100 transition-all duration-300 -mt-1">← Back to home</span>
-                        </div>
-                    </div>
-
-                    <h2 className="text-3xl font-bold text-white leading-tight mb-4">
-                        Welcome<br />
-                        <span className="text-purple-200 inline-block animate-slide-in">Back!</span>
-                    </h2>
-                    <p className="text-purple-100/70 text-sm max-w-xs">
-                        Sign in to access your logistics dashboard and manage your shipments.
-                    </p>
+                        className="w-10 h-10 border-4 border-t-transparent rounded-full animate-spin mb-3"
+                        style={{ borderColor: 'var(--color-primary)', borderTopColor: 'transparent' }}
+                    ></div>
+                    <p className="text-sm font-medium text-gray-600">Signing you in...</p>
                 </div>
+            )}
 
-                {/* Center content - Feature highlights */}
-                <div className="relative z-10 space-y-4">
-                    {[
-                        { icon: "📦", text: "Track all your shipments in real-time" },
-                        { icon: "📊", text: "Access detailed analytics & reports" },
-                        { icon: "🚀", text: "Streamline your delivery operations" }
-                    ].map((item, index) => (
-                        <div
-                            key={index}
-                            className="flex items-center space-x-3 group cursor-default"
-                            style={{ animationDelay: `${index * 0.1}s` }}
-                        >
-                            <span className="text-lg group-hover:scale-125 transition-transform duration-300">{item.icon}</span>
-                            <span className="text-white/70 text-sm group-hover:text-white transition-colors duration-300">{item.text}</span>
-                        </div>
-                    ))}
+            {/* Logo at top */}
+            <div
+                className="flex items-center gap-2 mb-8 cursor-pointer group"
+                onClick={handleBack}
+            >
+                <div
+                    className="w-8 h-8 rounded-lg flex items-center justify-center transition-transform group-hover:scale-110"
+                    style={{ backgroundColor: 'var(--yellow-color)' }}
+                >
+                    <span className="text-white font-bold text-lg">C</span>
                 </div>
-
-                {/* Enhanced bottom section */}
-                <div className="relative z-10 flex items-center justify-between">
-                    <div className="flex items-center space-x-2 text-xs text-purple-100/50 group cursor-default">
-                        <span className="text-lg group-hover:animate-bounce transition-transform">🛡️</span>
-                        <span className="group-hover:text-purple-100/70 transition-colors">Secured with ISO 27001</span>
-                    </div>
-
-                    {/* Animated decorative element */}
-                    <div className="flex items-center space-x-1">
-                        <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse-subtle"></div>
-                        <span className="text-xs text-white/50">System Online</span>
-                    </div>
-                </div>
+                <span className="text-xl font-bold" style={{ color: 'var(--color-secondary)' }}>
+                    CarJoy
+                </span>
             </div>
 
-            {/* --- RIGHT SIDE: THE FORM PANEL --- */}
-            <div className="flex-1 flex items-center justify-center p-6 md:p-12 bg-white relative">
-                {isLoading && (
-                    <div className="absolute inset-0 bg-white/90 backdrop-blur-sm z-50 flex flex-col items-center justify-center">
-                        <div
-                            className="w-10 h-10 border-4 border-t-transparent rounded-full animate-spin mb-3"
-                            style={{ borderColor: '#735dff', borderTopColor: 'transparent' }}
-                        ></div>
-                        <p className="text-sm font-medium text-gray-600">Signing you in...</p>
-                    </div>
-                )}
+            {/* Login Card */}
+            <div className="w-full max-w-md bg-white rounded-lg shadow-sm p-8 md:p-10">
+                {/* Heading */}
+                <div className="mb-6">
+                    <h1 className="text-xl font-semibold text-gray-800 mb-1">Sign in to account</h1>
+                    <p className="text-sm text-gray-500">Enter your email & password to login</p>
+                </div>
 
-                <div className="max-w-sm w-full">
-                    {/* Lock icon at top */}
-                    <div className="flex justify-center mb-6">
-                        <div className="w-14 h-14 bg-purple-50 rounded-xl border-2 border-purple-100 flex items-center justify-center">
-                            <LockIcon />
-                        </div>
+                <form onSubmit={handleSubmit} className="space-y-5">
+                    {/* Email Field */}
+                    <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                            Email Address
+                        </label>
+                        <input
+                            type="email"
+                            className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-md focus:outline-none focus:ring-2 transition-all text-gray-700 placeholder:text-gray-400"
+                            style={{ '--tw-ring-color': 'var(--color-primary-ring)' }}
+                            placeholder="Test@gmail.com"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            required
+                        />
                     </div>
 
-                    {/* Sign In heading */}
-                    <div className="text-center mb-8">
-                        <h1 className="text-2xl font-bold text-gray-800 mb-1">Sign In</h1>
-                    </div>
-
-                    <form onSubmit={handleSubmit} className="space-y-5">
-                        {/* Username Field */}
-                        <div>
-                            <label className="block text-sm font-semibold text-gray-700 mb-2">
-                                User Name
-                            </label>
+                    {/* Password Field */}
+                    <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                            Password
+                        </label>
+                        <div className="relative">
                             <input
-                                type="text"
-                                className="w-full px-4 py-3 bg-white border border-gray-200 rounded-lg focus:outline-none focus:border-purple-400 focus:ring-2 focus:ring-purple-100 transition-all text-gray-700 placeholder:text-gray-400"
-                                placeholder="Enter User Name"
-                                value={username}
-                                onChange={(e) => setUsername(e.target.value)}
+                                type={showPassword ? "text" : "password"}
+                                className="w-full px-4 py-3 pr-16 bg-gray-50 border border-gray-200 rounded-md focus:outline-none focus:ring-2 transition-all text-gray-700 placeholder:text-gray-400"
+                                style={{ '--tw-ring-color': 'var(--color-primary-ring)' }}
+                                placeholder="••••••••"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
                                 required
                             />
+                            <button
+                                type="button"
+                                className="absolute inset-y-0 right-0 pr-4 flex items-center text-sm font-medium transition-colors"
+                                style={{ color: 'var(--color-primary)' }}
+                                onClick={() => setShowPassword(!showPassword)}
+                            >
+                                {showPassword ? 'hide' : 'show'}
+                            </button>
                         </div>
+                    </div>
 
-                        {/* Password Field */}
-                        <div>
-                            <div className="flex justify-between items-center mb-2">
-                                <label className="block text-sm font-semibold text-gray-700">
-                                    Password
-                                </label>
-                                <a href="#" className="text-sm font-medium text-orange-500 hover:text-orange-600 transition-colors">
-                                    Forget password ?
-                                </a>
-                            </div>
-                            <div className="relative">
-                                <input
-                                    type={showPassword ? "text" : "password"}
-                                    className="w-full px-4 py-3 pr-12 bg-white border border-gray-200 rounded-lg focus:outline-none focus:border-purple-400 focus:ring-2 focus:ring-purple-100 transition-all text-gray-700 placeholder:text-gray-400"
-                                    placeholder="password"
-                                    value={password}
-                                    onChange={(e) => setPassword(e.target.value)}
-                                    required
-                                />
-                                <button
-                                    type="button"
-                                    className="absolute inset-y-0 right-0 pr-4 flex items-center"
-                                    onClick={() => setShowPassword(!showPassword)}
-                                >
-                                    <EyeIcon visible={showPassword} />
-                                </button>
-                            </div>
-                        </div>
-
-                        {/* Remember Me */}
-                        <div className="flex items-center space-x-2">
+                    {/* Remember Me & Forgot Password */}
+                    <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-2">
                             <input
                                 type="checkbox"
                                 id="remember"
                                 checked={rememberMe}
                                 onChange={(e) => setRememberMe(e.target.checked)}
-                                className="w-4 h-4 border-gray-300 rounded text-purple-600 focus:ring-purple-500"
-                                style={{ accentColor: '#735dff' }}
+                                className="w-4 h-4 border-gray-300 rounded"
+                                style={{ accentColor: 'var(--color-primary)' }}
                             />
                             <label htmlFor="remember" className="text-sm text-gray-600">
-                                Remember password ?
+                                Remember password
                             </label>
                         </div>
+                        <a
+                            href="#"
+                            className="text-sm font-medium transition-colors hover:underline"
+                            style={{ color: 'var(--color-primary)' }}
+                        >
+                            Forgot password?
+                        </a>
+                    </div>
 
-                        {/* Social Login Separator */}
-                        <div className="relative py-2">
-                            <div className="absolute inset-0 flex items-center">
-                                <div className="w-full border-t border-gray-200"></div>
-                            </div>
-                            <div className="relative flex justify-center">
-                                <span className="px-4 bg-white text-gray-400 text-sm">
-                                    OR Signin With
-                                </span>
-                            </div>
+                    {/* Submit Button */}
+                    <button
+                        type="submit"
+                        disabled={isLoading}
+                        className="w-full text-white py-3 rounded-md font-medium text-base transition-all hover:opacity-90 active:scale-[0.98] disabled:opacity-70"
+                        style={{ backgroundColor: 'var(--color-primary)' }}
+                    >
+                        {isLoading ? 'Signing in...' : 'Sign in'}
+                    </button>
+
+                    {/* Social Login Separator */}
+                    <div className="relative py-4">
+                        <div className="absolute inset-0 flex items-center">
+                            <div className="w-full border-t border-gray-200"></div>
                         </div>
-
-                        {/* Social Buttons */}
-                        <div className="flex justify-center gap-4">
-                            <button
-                                type="button"
-                                className="w-11 h-11 rounded-full bg-blue-500 flex items-center justify-center hover:bg-blue-600 transition-colors shadow-md"
-                            >
-                                <span className="text-white font-bold">G</span>
-                            </button>
-                            <button
-                                type="button"
-                                className="w-11 h-11 rounded-full bg-orange-500 flex items-center justify-center hover:bg-orange-600 transition-colors shadow-md"
-                            >
-                                <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
-                                    <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
-                                    <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
-                                </svg>
-                            </button>
-                            <button
-                                type="button"
-                                className="w-11 h-11 rounded-full bg-green-500 flex items-center justify-center hover:bg-green-600 transition-colors shadow-md"
-                            >
-                                <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
-                                    <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
-                                </svg>
-                            </button>
+                        <div className="relative flex justify-center">
+                            <span className="px-4 bg-white text-gray-500 text-sm">
+                                Or Sign in with
+                            </span>
                         </div>
+                    </div>
 
-                        {/* Submit Button */}
+                    {/* Social Buttons */}
+                    <div className="flex justify-center gap-3">
                         <button
-                            type="submit"
-                            disabled={isLoading}
-                            className="w-full text-white py-3.5 rounded-lg font-semibold text-base transition-all hover:opacity-90 active:scale-[0.98] disabled:opacity-70 shadow-lg"
-                            style={{ backgroundColor: '#735dff' }}
+                            type="button"
+                            className="flex items-center gap-2 px-5 py-2.5 border border-gray-200 rounded-md hover:bg-gray-50 transition-colors text-sm text-gray-600"
                         >
-                            {isLoading ? 'Signing in...' : 'Sign In'}
+                            <LinkedInIcon /> Linkedin
                         </button>
-                    </form>
-
-                    {/* Sign Up Link */}
-                    <p className="text-center mt-6 text-sm text-gray-500">
-                        Dont have an account?{" "}
-                        <Link
-                            to="/register"
-                            className="font-semibold text-blue-600 hover:underline transition-colors"
+                        <button
+                            type="button"
+                            className="flex items-center gap-2 px-5 py-2.5 border border-gray-200 rounded-md hover:bg-gray-50 transition-colors text-sm text-gray-600"
                         >
-                            Sign Up
-                        </Link>
-                    </p>
-                </div>
+                            <TwitterIcon /> twitter
+                        </button>
+                        <button
+                            type="button"
+                            className="flex items-center gap-2 px-5 py-2.5 border border-gray-200 rounded-md hover:bg-gray-50 transition-colors text-sm text-gray-600"
+                        >
+                            <FacebookIcon /> facebook
+                        </button>
+                    </div>
+                </form>
+
+                {/* Sign Up Link */}
+                <p className="text-center mt-6 text-sm text-gray-500">
+                    Don't have account?{" "}
+                    <Link
+                        to="/register"
+                        className="font-semibold hover:underline transition-colors"
+                        style={{ color: 'var(--color-primary)' }}
+                    >
+                        Create Account
+                    </Link>
+                </p>
             </div>
         </div>
     );

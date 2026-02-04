@@ -11,7 +11,7 @@
 
 :root {
   /* ===== Primary Colors (Purple - Clean White Theme) ===== */
-  --color-primary: #735dff;
+  --color-primary: #006666;
   --color-primary-dark: #5b45e0;
   --color-primary-light: #9182ff;
   --color-primary-50: #f5f3ff;
@@ -45,6 +45,10 @@
   --gradient-primary-diagonal: linear-gradient(to bottom right, #735dff, #5b45e0);
   --gradient-sidebar: linear-gradient(to bottom, #ffffff, #f9fafb, #f3f4f6);
   --gradient-secondary: linear-gradient(to right, #1f2937, #111827);
+
+
+  /* ===== Admin Theme Colors ===== */
+  --yellow-color: #FFAE1C;
 }
 
 /* ==========================================================================
@@ -85,3 +89,4 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
