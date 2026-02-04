@@ -1,8 +1,7 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import AdminNavbar from "../../components/AdminNavbar.jsx";
 import AdminHeader from "../../components/AdminHeader.jsx";
 import ResponsiveContainer from "../../components/ResponsiveContainer.jsx";
-import { IconLibrary } from "../../components/IconLibrary.jsx";
 
 function AdminBilling() {
   const [invoices] = useState([
@@ -30,22 +29,10 @@ function AdminBilling() {
     }
   };
 
-  const [sidebarExpanded, setSidebarExpanded] = React.useState(true);
-
-  React.useEffect(() => {
-    const checkSidebar = () => {
-      const expanded = sessionStorage.getItem('sidebarExpanded') !== 'false';
-      setSidebarExpanded(expanded);
-    };
-    checkSidebar();
-    const interval = setInterval(checkSidebar, 100);
-    return () => clearInterval(interval);
-  }, []);
-
   return (
-    <div className="flex min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-50">
+    <div className="flex min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-100">
       <AdminNavbar />
-      <div className="flex-1 transition-all duration-300" style={{ marginLeft: sidebarExpanded ? '200px' : '60px' }}>
+      <div className="flex-1 flex flex-col min-h-screen">
         <AdminHeader />
         
         {/* Main Content */}
