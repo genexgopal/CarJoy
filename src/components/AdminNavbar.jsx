@@ -1,8 +1,19 @@
 import React, { useState, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import { IconLibrary } from "./IconLibrary.jsx";
+import { useAuth } from "../context/AuthContext";
 
 function AdminNavbar() {
+  const navigate = useNavigate();
+  const { logout } = useAuth();
+
+  // Handle logout
+  const handleLogout = () => {
+    logout();
+    toast.success('Logged out successfully');
+    navigate('/login');
+  };
   // Initialize isExpanded from sessionStorage (persist across page navigation)
   const [isExpanded, setIsExpanded] = useState(() => {
     const stored = sessionStorage.getItem('sidebarExpanded');
@@ -287,6 +298,7 @@ function AdminNavbar() {
 
           {/* Logout Button */}
           <button
+            onClick={handleLogout}
             className={`flex items-center gap-2 px-3 py-2.5 w-full rounded-xl bg-red-500/10 hover:bg-red-500/20 text-red-400 hover:text-red-300 transition-all duration-200 ${!isExpanded && !isMobile ? "justify-center" : ""
               }`}
             title="Logout"

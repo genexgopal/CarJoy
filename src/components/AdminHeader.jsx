@@ -1,5 +1,8 @@
 import React, { useState, useRef, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import { IconLibrary } from "./IconLibrary.jsx";
+import { useAuth } from "../context/AuthContext";
 
 function AdminHeader() {
   const [showDropdown, setShowDropdown] = useState(false);
@@ -8,13 +11,24 @@ function AdminHeader() {
   const [searchFocused, setSearchFocused] = useState(false);
   const dropdownRef = useRef(null);
   const notificationRef = useRef(null);
+  const navigate = useNavigate();
+  const { user: authUser, logout } = useAuth();
 
-  // Mock user data
+  // Get user data from auth context with fallback
   const user = {
-    name: "Admin User",
-    email: "admin@shipmyparcel.com",
-    role: "Administrator",
-    initials: "AU",
+    name: authUser?.name || authUser?.email?.split('@')[0] || "User",
+    email: authUser?.email || "",
+    role: authUser?.role || "User",
+    initials: authUser?.name
+      ? authUser.name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2)
+      : authUser?.email?.charAt(0).toUpperCase() || "U",
+  };
+
+  // Handle logout
+  const handleLogout = () => {
+    logout();
+    toast.success('Logged out successfully');
+    navigate('/login');
   };
 
   // Mock notifications
@@ -260,7 +274,10 @@ function AdminHeader() {
 
                 {/* Logout Button */}
                 <div className="border-t border-slate-200 p-2">
-                  <button className="w-full px-4 py-3 text-left text-sm font-bold text-red-600 hover:bg-red-50 transition-colors flex items-center gap-3 group rounded-xl">
+                  <button
+                    onClick={handleLogout}
+                    className="w-full px-4 py-3 text-left text-sm font-bold text-red-600 hover:bg-red-50 transition-colors flex items-center gap-3 group rounded-xl"
+                  >
                     <IconLibrary.LogOut size={18} color="#dc2626" strokeWidth={2} />
                     <span className="group-hover:translate-x-0.5 transition-transform">Logout</span>
                   </button>

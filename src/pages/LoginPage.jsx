@@ -1,5 +1,7 @@
 import { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link, useLocation } from "react-router-dom";
+import { toast } from "react-toastify";
+import { useAuth } from "../context/AuthContext";
 import loginBg from "../assets/images/login_bg.jpg";
 
 const LoginPage = ({ onBack, embedded = false }) => {
@@ -7,8 +9,14 @@ const LoginPage = ({ onBack, embedded = false }) => {
     const [password, setPassword] = useState("");
     const [rememberMe, setRememberMe] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
-    const navigate = useNavigate();
     const [isLoading, setIsLoading] = useState(false);
+
+    const navigate = useNavigate();
+    const location = useLocation();
+    const { login } = useAuth();
+
+    // Get the redirect path from location state, or default to dashboard
+    const from = location.state?.from?.pathname || '/dashboard';
 
     const handleBack = () => {
         if (onBack) {
@@ -23,27 +31,11 @@ const LoginPage = ({ onBack, embedded = false }) => {
         setIsLoading(true);
 
         try {
-            const API_URL = import.meta.env.VITE_APP_API_URL || 'http://localhost:5000';
-
-            const response = await fetch(`${API_URL}/api/login`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ email, password })
-            });
-
-            const data = await response.json();
-
-            if (response.ok) {
-                localStorage.setItem('access_token', data.access_token);
-                localStorage.setItem('user', JSON.stringify(data.user));
-
-                navigate('/dashboard');
-            } else {
-                alert(data.message || 'Login failed');
-            }
+            await login(email, password);
+            toast.success('Login successful! Welcome back.');
+            navigate(from, { replace: true });
         } catch (error) {
-            console.error('Login error:', error);
-            alert('Network error. Please try again.');
+            toast.error(error.message || 'Login failed. Please try again.');
         } finally {
             setIsLoading(false);
         }

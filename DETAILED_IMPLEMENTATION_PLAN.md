@@ -79,8 +79,8 @@ All routes in `src/App.jsx` are publicly accessible including admin pages.
 import { Navigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
-export const ProtectedRoute = ({ children, requiredRole = null }) => {
-  const { user, isAuthenticated, isLoading } = useAuth();
+export const ProtectedRoute = ({ children }) => {
+  const { isAuthenticated, isLoading } = useAuth();
   const location = useLocation();
 
   if (isLoading) {
@@ -89,10 +89,6 @@ export const ProtectedRoute = ({ children, requiredRole = null }) => {
 
   if (!isAuthenticated) {
     return <Navigate to="/login" state={{ from: location }} replace />;
-  }
-
-  if (requiredRole && user?.role !== requiredRole) {
-    return <Navigate to="/unauthorized" replace />;
   }
 
   return children;
@@ -230,29 +226,6 @@ axiosInstance.interceptors.response.use(
 
 **Documentation:**
 - [JWT Refresh Token Best Practices](https://auth0.com/blog/refresh-tokens-what-are-they-and-when-to-use-them/)
-
----
-
-### 1.4 Role-Based Access Control (RBAC)
-
-**Priority:** P2 | **Effort:** M (4-8 hours) | **Dependencies:** 1.1, 1.2
-
-**Current State:**
-- Admin routes exist but no role verification
-- User roles not utilized
-
-**Implementation:**
-```jsx
-// Example usage in App.jsx
-<Route
-  path="/admin/*"
-  element={
-    <ProtectedRoute requiredRole="admin">
-      <AdminLayout />
-    </ProtectedRoute>
-  }
-/>
-```
 
 ---
 
@@ -577,12 +550,12 @@ function App() {
 
             {/* Protected Admin Routes */}
             <Route path="/admin" element={
-              <ProtectedRoute requiredRole="admin">
+              <ProtectedRoute>
                 <AdminDashboard />
               </ProtectedRoute>
             } />
             <Route path="/admin/orders" element={
-              <ProtectedRoute requiredRole="admin">
+              <ProtectedRoute>
                 <AdminOrders />
               </ProtectedRoute>
             } />
@@ -1411,7 +1384,6 @@ const handleKeyDown = (e) => {
             └── [1.2] AuthContext
                     ├── [1.1] ProtectedRoute
                     │       └── [5.1] Route Guards
-                    │               └── [1.4] RBAC
                     └── [4.2] Standardize API Calls
                             └── [1.3] Token Refresh
 
