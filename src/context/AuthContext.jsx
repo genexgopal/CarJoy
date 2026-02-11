@@ -49,8 +49,10 @@ export const AuthProvider = ({ children }) => {
         if (demoUser) {
           const userData = { email: demoUser.email, name: demoUser.name, role: demoUser.role };
           const fakeToken = 'demo_token_' + Date.now();
+          const fakeRefreshToken = 'demo_refresh_token_' + Date.now();
 
           localStorage.setItem('access_token', fakeToken);
+          localStorage.setItem('refresh_token', fakeRefreshToken);
           localStorage.setItem('user', JSON.stringify(userData));
 
           setUser(userData);
@@ -62,11 +64,16 @@ export const AuthProvider = ({ children }) => {
 
       // PRODUCTION MODE: Use real API
       const response = await axiosInstance.post('/api/login', { email, password });
-      const { access_token, user: userData } = response.data;
+      const { access_token, refresh_token, user: userData } = response.data;
 
-      // Store token and user data
+      // Store access token and user data
       localStorage.setItem('access_token', access_token);
       localStorage.setItem('user', JSON.stringify(userData));
+
+      // Store refresh token if provided by backend
+      if (refresh_token) {
+        localStorage.setItem('refresh_token', refresh_token);
+      }
 
       setUser(userData);
       return userData;
@@ -99,22 +106,29 @@ export const AuthProvider = ({ children }) => {
           role: 'User'
         };
         const fakeToken = 'demo_token_' + Date.now();
+        const fakeRefreshToken = 'demo_refresh_token_' + Date.now();
 
         localStorage.setItem('access_token', fakeToken);
+        localStorage.setItem('refresh_token', fakeRefreshToken);
         localStorage.setItem('user', JSON.stringify(newUser));
         setUser(newUser);
 
-        return { success: true, user: newUser, access_token: fakeToken };
+        return { success: true, user: newUser, access_token: fakeToken, refresh_token: fakeRefreshToken };
       }
 
       // PRODUCTION MODE: Use real API
       const response = await axiosInstance.post('/api/register', userData);
-      const { access_token, user: newUser } = response.data;
+      const { access_token, refresh_token, user: newUser } = response.data;
 
       if (access_token) {
         localStorage.setItem('access_token', access_token);
         localStorage.setItem('user', JSON.stringify(newUser));
         setUser(newUser);
+
+        // Store refresh token if provided by backend
+        if (refresh_token) {
+          localStorage.setItem('refresh_token', refresh_token);
+        }
       }
 
       return response.data;
@@ -128,10 +142,11 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   /**
-   * Logout user and clear all auth data
+   * Logout user and clear all auth data (including refresh token)
    */
   const logout = useCallback(() => {
     localStorage.removeItem('access_token');
+    localStorage.removeItem('refresh_token');
     localStorage.removeItem('user');
     setUser(null);
     setError(null);
