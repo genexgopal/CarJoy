@@ -84,14 +84,13 @@ const LoginPage = ({ onBack, embedded = false }) => {
                 <form onSubmit={handleSubmit} className="space-y-5">
                     {/* Email Field */}
                     <div>
-                        <label className="block text-sm font-medium text-slate-700 mb-1 ml-1">
+                        <label className="block text-sm font-semibold text-slate-700 mb-1.5 ml-1">
                             Email Address
                         </label>
                         <div className="relative">
                             <input
                                 type="email"
-                                className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:border-transparent outline-none transition-all placeholder:text-gray-400 text-sm"
-                                style={{ '--tw-ring-color': 'var(--color-primary)' }}
+                                className="w-full px-4 py-3 bg-slate-50 border-2 border-slate-200 rounded-xl focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 outline-none transition-all duration-200 placeholder:text-slate-400 text-sm hover:border-slate-300"
                                 placeholder="Test@gmail.com"
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
@@ -102,14 +101,13 @@ const LoginPage = ({ onBack, embedded = false }) => {
 
                     {/* Password Field */}
                     <div>
-                        <div className="flex justify-between mb-1 ml-1">
-                            <label className="block text-sm font-medium text-slate-700">
+                        <div className="flex justify-between mb-1.5 ml-1">
+                            <label className="block text-sm font-semibold text-slate-700">
                                 Password
                             </label>
                             <a
                                 href="#"
-                                className="text-xs font-semibold transition-colors"
-                                style={{ color: 'var(--color-primary)' }}
+                                className="text-xs font-semibold transition-colors text-indigo-600 hover:text-indigo-700"
                             >
                                 Forgot password?
                             </a>
@@ -117,8 +115,7 @@ const LoginPage = ({ onBack, embedded = false }) => {
                         <div className="relative">
                             <input
                                 type={showPassword ? "text" : "password"}
-                                className="w-full px-4 py-3 pr-10 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:border-transparent outline-none transition-all placeholder:text-gray-400 text-sm"
-                                style={{ '--tw-ring-color': 'var(--color-primary)' }}
+                                className="w-full px-4 py-3 pr-10 bg-slate-50 border-2 border-slate-200 rounded-xl focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 outline-none transition-all duration-200 placeholder:text-slate-400 text-sm hover:border-slate-300"
                                 placeholder="••••••••"
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
@@ -135,30 +132,24 @@ const LoginPage = ({ onBack, embedded = false }) => {
                     </div>
 
                     {/* Remember Me */}
-                    <div className="flex items-center space-x-2 ml-1">
+                    <div className="flex items-center space-x-2.5 ml-1">
                         <input
                             type="checkbox"
                             id="remember-embedded"
                             checked={rememberMe}
                             onChange={(e) => setRememberMe(e.target.checked)}
-                            className="w-4 h-4 border-gray-300 rounded"
-                            style={{ accentColor: 'var(--color-primary)' }}
+                            className="w-4 h-4 border-2 border-slate-300 rounded accent-indigo-600"
                         />
-                        <label htmlFor="remember-embedded" className="text-sm text-gray-600">
+                        <label htmlFor="remember-embedded" className="text-sm text-slate-600">
                             Remember password
                         </label>
                     </div>
 
-                    {/* Submit Button */}
+                    {/* Submit Button - Enhanced with gradient and shadows */}
                     <button
                         type="submit"
                         disabled={isLoading}
-                        className="w-full text-white font-semibold py-3 px-4 rounded-lg shadow-md active:transform active:scale-[0.98] transition-all duration-150 flex items-center justify-center space-x-2 disabled:opacity-70"
-                        style={{
-                            backgroundColor: 'var(--color-primary)',
-                        }}
-                        onMouseOver={(e) => e.currentTarget.style.backgroundColor = 'var(--color-primary-dark)'}
-                        onMouseOut={(e) => e.currentTarget.style.backgroundColor = 'var(--color-primary)'}
+                        className="w-full text-white font-semibold py-3.5 px-4 rounded-xl active:scale-[0.98] transition-all duration-200 flex items-center justify-center space-x-2 disabled:opacity-70 bg-gradient-to-r from-indigo-600 to-indigo-700 shadow-lg shadow-indigo-500/25 hover:shadow-xl hover:shadow-indigo-500/30 hover:-translate-y-0.5"
                     >
                         {isLoading ? (
                             <span>Signing in...</span>
@@ -174,32 +165,32 @@ const LoginPage = ({ onBack, embedded = false }) => {
                 {/* Social Login Separator */}
                 <div className="relative my-6">
                     <div className="absolute inset-0 flex items-center">
-                        <div className="w-full border-t border-gray-200"></div>
+                        <div className="w-full border-t border-slate-200"></div>
                     </div>
                     <div className="relative flex justify-center text-sm">
-                        <span className="px-4 bg-white text-gray-400 text-xs font-medium">
+                        <span className="px-4 bg-white text-slate-500 text-xs font-medium">
                             Or Sign in with
                         </span>
                     </div>
                 </div>
 
-                {/* Social Buttons */}
+                {/* Social Buttons - Enhanced with shadows and hover effects */}
                 <div className="flex justify-center gap-3">
-                    <button type="button" className="flex items-center gap-2 px-4 py-2 border border-gray-200 rounded-md hover:bg-gray-50 transition-colors text-sm text-gray-600">
+                    <button type="button" className="flex items-center gap-2 px-4 py-2.5 border-2 border-slate-200 rounded-xl hover:bg-slate-50 hover:border-slate-300 transition-all duration-200 text-sm font-medium text-slate-600 shadow-sm hover:shadow-md">
                         <LinkedInIcon /> Linkedin
                     </button>
-                    <button type="button" className="flex items-center gap-2 px-4 py-2 border border-gray-200 rounded-md hover:bg-gray-50 transition-colors text-sm text-gray-600">
+                    <button type="button" className="flex items-center gap-2 px-4 py-2.5 border-2 border-slate-200 rounded-xl hover:bg-slate-50 hover:border-slate-300 transition-all duration-200 text-sm font-medium text-slate-600 shadow-sm hover:shadow-md">
                         <TwitterIcon /> twitter
                     </button>
-                    <button type="button" className="flex items-center gap-2 px-4 py-2 border border-gray-200 rounded-md hover:bg-gray-50 transition-colors text-sm text-gray-600">
+                    <button type="button" className="flex items-center gap-2 px-4 py-2.5 border-2 border-slate-200 rounded-xl hover:bg-slate-50 hover:border-slate-300 transition-all duration-200 text-sm font-medium text-slate-600 shadow-sm hover:shadow-md">
                         <FacebookIcon /> facebook
                     </button>
                 </div>
 
                 {/* Sign Up Link */}
-                <p className="text-center mt-6 text-sm text-gray-500">
+                <p className="text-center mt-6 text-sm text-slate-500">
                     Don't have account?{" "}
-                    <Link to="/register" className="font-semibold hover:underline" style={{ color: 'var(--color-primary)' }}>
+                    <Link to="/register" className="font-bold hover:underline text-indigo-600 hover:text-indigo-700">
                         Create Account
                     </Link>
                 </p>
@@ -222,47 +213,48 @@ const LoginPage = ({ onBack, embedded = false }) => {
             {isLoading && (
                 <div className="absolute inset-0 bg-white/80 backdrop-blur-sm z-50 flex flex-col items-center justify-center">
                     <div
-                        className="w-10 h-10 border-4 border-t-transparent rounded-full animate-spin mb-3"
+                        className="w-12 h-12 border-4 border-t-transparent rounded-full animate-spin mb-4"
                         style={{ borderColor: 'var(--color-primary)', borderTopColor: 'transparent' }}
                     ></div>
-                    <p className="text-sm font-medium text-gray-600">Signing you in...</p>
+                    <p className="text-sm font-semibold text-slate-700">Signing you in...</p>
                 </div>
             )}
 
             {/* Logo at top */}
             <div
-                className="flex items-center gap-2 mb-8 cursor-pointer group"
+                className="flex items-center gap-2.5 mb-10 cursor-pointer group"
                 onClick={handleBack}
             >
                 <div
-                    className="w-8 h-8 rounded-lg flex items-center justify-center transition-transform group-hover:scale-110"
-                    style={{ backgroundColor: 'var(--yellow-color)' }}
+                    className="w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-200 group-hover:scale-110 shadow-lg"
+                    style={{ backgroundColor: 'var(--color-primary)' }}
                 >
-                    <span className="text-white font-bold text-lg">C</span>
+                    <span className="text-white font-bold text-xl">C</span>
                 </div>
-                <span className="text-xl font-bold" style={{ color: 'var(--color-secondary)' }}>
+                <span className="text-2xl font-bold" style={{ color: 'var(--color-secondary)' }}>
                     CarJoy
                 </span>
             </div>
 
-            {/* Login Card */}
-            <div className="w-full max-w-md bg-white rounded-lg shadow-sm p-8 md:p-10">
+            {/* Login Card - Enhanced with elevated styling */}
+            <div className="relative w-full max-w-md bg-white rounded-2xl shadow-[0_4px_20px_-4px_rgba(0,0,0,0.1),0_8px_32px_-8px_rgba(0,0,0,0.08)] p-8 md:p-10 overflow-hidden transition-all duration-300 hover:shadow-[0_8px_30px_-4px_rgba(79,70,229,0.1),0_16px_40px_-8px_rgba(0,0,0,0.1)]">
+                {/* Gradient accent bar at top */}
+                <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-indigo-500 via-blue-500 to-indigo-600"></div>
                 {/* Heading */}
-                <div className="mb-6">
-                    <h1 className="text-xl font-semibold text-gray-800 mb-1">Sign in to account</h1>
-                    <p className="text-sm text-gray-500">Enter your email & password to login</p>
+                <div className="mb-8 mt-2">
+                    <h1 className="text-2xl font-bold text-slate-800 mb-2">Sign in to account</h1>
+                    <p className="text-sm text-slate-500">Enter your email & password to login</p>
                 </div>
 
                 <form onSubmit={handleSubmit} className="space-y-5">
                     {/* Email Field */}
                     <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                        <label className="block text-sm font-semibold text-slate-700 mb-2">
                             Email Address
                         </label>
                         <input
                             type="email"
-                            className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-md focus:outline-none focus:ring-2 transition-all text-gray-700 placeholder:text-gray-400"
-                            style={{ '--tw-ring-color': 'var(--color-primary-ring)' }}
+                            className="w-full px-4 py-3.5 bg-slate-50 border-2 border-slate-200 rounded-xl focus:outline-none focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10 transition-all duration-200 text-slate-700 placeholder:text-slate-400 hover:border-slate-300"
                             placeholder="Test@gmail.com"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
@@ -272,14 +264,13 @@ const LoginPage = ({ onBack, embedded = false }) => {
 
                     {/* Password Field */}
                     <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                        <label className="block text-sm font-semibold text-slate-700 mb-2">
                             Password
                         </label>
                         <div className="relative">
                             <input
                                 type={showPassword ? "text" : "password"}
-                                className="w-full px-4 py-3 pr-16 bg-gray-50 border border-gray-200 rounded-md focus:outline-none focus:ring-2 transition-all text-gray-700 placeholder:text-gray-400"
-                                style={{ '--tw-ring-color': 'var(--color-primary-ring)' }}
+                                className="w-full px-4 py-3.5 pr-16 bg-slate-50 border-2 border-slate-200 rounded-xl focus:outline-none focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10 transition-all duration-200 text-slate-700 placeholder:text-slate-400 hover:border-slate-300"
                                 placeholder="••••••••"
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
@@ -287,8 +278,7 @@ const LoginPage = ({ onBack, embedded = false }) => {
                             />
                             <button
                                 type="button"
-                                className="absolute inset-y-0 right-0 pr-4 flex items-center text-sm font-medium transition-colors"
-                                style={{ color: 'var(--color-primary)' }}
+                                className="absolute inset-y-0 right-0 pr-4 flex items-center text-sm font-semibold transition-colors text-indigo-600 hover:text-indigo-700"
                                 onClick={() => setShowPassword(!showPassword)}
                             >
                                 {showPassword ? 'hide' : 'show'}
@@ -298,67 +288,64 @@ const LoginPage = ({ onBack, embedded = false }) => {
 
                     {/* Remember Me & Forgot Password */}
                     <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-2">
+                        <div className="flex items-center gap-2.5">
                             <input
                                 type="checkbox"
                                 id="remember"
                                 checked={rememberMe}
                                 onChange={(e) => setRememberMe(e.target.checked)}
-                                className="w-4 h-4 border-gray-300 rounded"
-                                style={{ accentColor: 'var(--color-primary)' }}
+                                className="w-4 h-4 border-2 border-slate-300 rounded accent-indigo-600"
                             />
-                            <label htmlFor="remember" className="text-sm text-gray-600">
+                            <label htmlFor="remember" className="text-sm text-slate-600">
                                 Remember password
                             </label>
                         </div>
                         <a
                             href="#"
-                            className="text-sm font-medium transition-colors hover:underline"
-                            style={{ color: 'var(--color-primary)' }}
+                            className="text-sm font-semibold transition-colors hover:underline text-indigo-600 hover:text-indigo-700"
                         >
                             Forgot password?
                         </a>
                     </div>
 
-                    {/* Submit Button */}
+                    {/* Submit Button - Enhanced with gradient and shadows */}
                     <button
                         type="submit"
                         disabled={isLoading}
-                        className="w-full text-white py-3 rounded-md font-medium text-base transition-all hover:opacity-90 active:scale-[0.98] disabled:opacity-70"
-                        style={{ backgroundColor: 'var(--color-primary)' }}
+                        className="w-full text-white py-3.5 rounded-xl font-semibold text-base transition-all duration-200 active:scale-[0.98] disabled:opacity-70 bg-gradient-to-r from-indigo-600 to-indigo-700 shadow-lg shadow-indigo-500/25 hover:shadow-xl hover:shadow-indigo-500/30 hover:-translate-y-0.5"
                     >
                         {isLoading ? 'Signing in...' : 'Sign in'}
                     </button>
 
                     {/* Social Login Separator */}
-                    <div className="relative py-4">
+                    <div className="relative py-5">
                         <div className="absolute inset-0 flex items-center">
-                            <div className="w-full border-t border-gray-200"></div>
+                            <div className="w-full border-t border-slate-200"></div>
                         </div>
                         <div className="relative flex justify-center">
-                            <span className="px-4 bg-white text-gray-500 text-sm">
+                            <span className="px-4 bg-white text-slate-500 text-sm font-medium">
                                 Or Sign in with
                             </span>
                         </div>
                     </div>
 
-                    {/* Social Buttons */}
+                    {/* Social Buttons - Enhanced with shadows and hover effects */}
                     <div className="flex justify-center gap-3">
                         <button
                             type="button"
-                            className="flex items-center gap-2 px-5 py-2.5 border border-gray-200 rounded-md hover:bg-gray-50 transition-colors text-sm text-gray-600"
+                            className="flex items-center gap-2 px-5 py-2.5 border-2 border-slate-200 rounded-xl hover:bg-slate-50 hover:border-slate-300 transition-all duration-200 text-sm font-medium text-slate-600 shadow-sm hover:shadow-md"
                         >
                             <LinkedInIcon /> Linkedin
                         </button>
                         <button
                             type="button"
-                            className="flex items-center gap-2 px-5 py-2.5 border border-gray-200 rounded-md hover:bg-gray-50 transition-colors text-sm text-gray-600"
+                            className="flex items-center gap-2 px-5 py-2.5 border-2 border-slate-200 rounded-xl hover:bg-slate-50 hover:border-slate-300 transition-all duration-200 text-sm font-medium text-slate-600 shadow-sm hover:shadow-md"
                         >
                             <TwitterIcon /> twitter
                         </button>
                         <button
                             type="button"
-                            className="flex items-center gap-2 px-5 py-2.5 border border-gray-200 rounded-md hover:bg-gray-50 transition-colors text-sm text-gray-600"
+                            className="flex items-center gap-2 px-5 py-2.5 border-2 border-slate-200 rounded-xl hover:bg-slate-50 hover:border-slate-300 transition-all duration-200 text-sm font-medium text-slate-600 shadow-sm hover:shadow-md"
                         >
                             <FacebookIcon /> facebook
                         </button>
@@ -366,12 +353,11 @@ const LoginPage = ({ onBack, embedded = false }) => {
                 </form>
 
                 {/* Sign Up Link */}
-                <p className="text-center mt-6 text-sm text-gray-500">
+                <p className="text-center mt-8 text-sm text-slate-500">
                     Don't have account?{" "}
                     <Link
                         to="/register"
-                        className="font-semibold hover:underline transition-colors"
-                        style={{ color: 'var(--color-primary)' }}
+                        className="font-bold hover:underline transition-colors text-indigo-600 hover:text-indigo-700"
                     >
                         Create Account
                     </Link>

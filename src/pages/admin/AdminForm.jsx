@@ -65,7 +65,7 @@ const FormField = memo(({
               : isFocused
                 ? 'border-primary focus-ring-primary'
                 : isValid
-                  ? 'border-emerald-300 bg-emerald-50/30'
+                  ? 'border-green-300 bg-green-50/30'
                   : 'border-slate-200 hover:border-slate-300 focus:border-primary focus-ring-primary'
             }`}
         />
@@ -77,8 +77,8 @@ const FormField = memo(({
             </div>
           )}
           {isValid && (
-            <div className="w-5 h-5 rounded-full bg-emerald-100 flex items-center justify-center">
-              <IconLibrary.Check size={12} color="#10b981" strokeWidth={3} />
+            <div className="w-5 h-5 rounded-full bg-green-100 flex items-center justify-center">
+              <IconLibrary.Check size={12} color="#22c55e" strokeWidth={3} />
             </div>
           )}
         </div>
@@ -375,7 +375,7 @@ function AdminForm() {
             <div className="flex items-center gap-3">
               {/* Draft saved indicator */}
               {draftSaved && (
-                <div className="flex items-center gap-2 px-3 py-1.5 bg-emerald-50 text-emerald-600 rounded-lg text-sm font-medium animate-in fade-in duration-300">
+                <div className="flex items-center gap-2 px-3 py-1.5 bg-green-50 text-green-600 rounded-lg text-sm font-medium animate-in fade-in duration-300">
                   <IconLibrary.Check size={14} color="currentColor" />
                   Draft saved
                 </div>
@@ -393,19 +393,19 @@ function AdminForm() {
 
           {/* Success Message */}
           {submitted && (
-            <div className="mb-8 bg-gradient-to-r from-emerald-50 to-teal-50 border border-emerald-200 rounded-2xl p-6 shadow-lg shadow-emerald-100/50 animate-in slide-in-from-top-4 duration-500">
+            <div className="mb-8 bg-gradient-to-r from-green-50 via-green-50/50 to-white border border-green-200 rounded-2xl p-6 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.1),0_8px_32px_-8px_rgba(34,197,94,0.15)] animate-in slide-in-from-top-4 duration-500">
               <div className="flex items-start gap-4">
-                <div className="w-12 h-12 bg-gradient-to-br from-emerald-500 to-teal-500 rounded-xl flex items-center justify-center shadow-lg">
-                  <IconLibrary.CheckCircle size={24} color="white" />
+                <div className="w-14 h-14 bg-gradient-to-br from-green-500 to-green-600 rounded-xl flex items-center justify-center shadow-lg shadow-green-500/25">
+                  <IconLibrary.CheckCircle size={28} color="white" />
                 </div>
                 <div className="flex-1">
-                  <h3 className="font-bold text-emerald-900 text-lg">Shipment Created Successfully!</h3>
-                  <p className="text-emerald-700 text-sm mt-1">Your shipment has been registered. Tracking ID: <span className="font-mono font-bold">{formData.orderNumber}</span></p>
+                  <h3 className="font-bold text-green-900 text-lg">Shipment Created Successfully!</h3>
+                  <p className="text-green-700 text-sm mt-1">Your shipment has been registered. Tracking ID: <span className="font-mono font-bold">{formData.orderNumber}</span></p>
                   <div className="mt-4 flex gap-3">
-                    <Link to="/admin/orders" className="px-4 py-2 bg-emerald-600 text-white rounded-lg text-sm font-semibold hover:bg-emerald-700 transition-colors">
+                    <Link to="/admin/orders" className="px-4 py-2 bg-green-600 text-white rounded-lg text-sm font-semibold hover:bg-green-700 transition-colors shadow-md hover:shadow-lg">
                       View Orders
                     </Link>
-                    <button className="px-4 py-2 bg-white text-emerald-700 border border-emerald-200 rounded-lg text-sm font-semibold hover:bg-emerald-50 transition-colors">
+                    <button className="px-4 py-2 bg-white text-green-700 border border-green-200 rounded-lg text-sm font-semibold hover:bg-green-50 transition-colors">
                       Print Label
                     </button>
                   </div>
@@ -416,23 +416,23 @@ function AdminForm() {
 
           {/* Reset Confirmation Modal */}
           {showResetConfirm && (
-            <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 animate-in fade-in duration-200">
-              <div className="bg-white rounded-2xl p-6 max-w-md w-full mx-4 shadow-2xl animate-in zoom-in-95 duration-200">
-                <div className="w-12 h-12 bg-amber-100 rounded-xl flex items-center justify-center mb-4">
-                  <IconLibrary.Alert size={24} color="#f59e0b" />
+            <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 animate-in fade-in duration-200">
+              <div className="bg-white rounded-2xl p-8 max-w-md w-full mx-4 shadow-[0_25px_50px_-12px_rgba(0,0,0,0.25),0_0_0_1px_rgba(0,0,0,0.05)] animate-in zoom-in-95 duration-200">
+                <div className="w-14 h-14 bg-gradient-to-br from-amber-100 to-amber-200 rounded-xl flex items-center justify-center mb-5 shadow-md">
+                  <IconLibrary.Alert size={28} color="#f59e0b" />
                 </div>
-                <h3 className="text-lg font-bold text-slate-900 mb-2">Reset Form?</h3>
-                <p className="text-slate-600 text-sm mb-6">This will clear all entered data and start fresh. This action cannot be undone.</p>
+                <h3 className="text-xl font-bold text-slate-900 mb-3">Reset Form?</h3>
+                <p className="text-slate-600 text-sm mb-6 leading-relaxed">This will clear all entered data and start fresh. This action cannot be undone.</p>
                 <div className="flex gap-3">
                   <button
                     onClick={() => setShowResetConfirm(false)}
-                    className="flex-1 px-4 py-2.5 bg-slate-100 text-slate-700 rounded-xl font-semibold hover:bg-slate-200 transition-colors"
+                    className="flex-1 px-4 py-3 bg-slate-100 text-slate-700 rounded-xl font-semibold hover:bg-slate-200 transition-all duration-200 hover:shadow-md"
                   >
                     Cancel
                   </button>
                   <button
                     onClick={handleReset}
-                    className="flex-1 px-4 py-2.5 bg-red-600 text-white rounded-xl font-semibold hover:bg-red-700 transition-colors"
+                    className="flex-1 px-4 py-3 bg-gradient-to-r from-red-500 to-red-600 text-white rounded-xl font-semibold hover:from-red-600 hover:to-red-700 transition-all duration-200 shadow-lg shadow-red-500/25 hover:shadow-xl hover:shadow-red-500/30"
                   >
                     Reset Form
                   </button>
@@ -442,8 +442,10 @@ function AdminForm() {
           )}
 
           {/* Modern Progress Stepper */}
-          <div className="bg-white border border-slate-100 rounded-2xl p-6 mb-8 shadow-sm">
-            <div className="flex items-center justify-between">
+          <div className="relative bg-white border border-slate-100 rounded-2xl p-6 mb-8 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.1),0_8px_32px_-8px_rgba(0,0,0,0.08)] hover:shadow-[0_8px_30px_-4px_rgba(79,70,229,0.12),0_16px_40px_-8px_rgba(0,0,0,0.1)] transition-all duration-300 overflow-hidden group/stepper">
+            {/* Gradient accent bar at top */}
+            <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-indigo-500 via-blue-500 to-indigo-600 opacity-80 group-hover/stepper:opacity-100 transition-opacity duration-300"></div>
+            <div className="flex items-center justify-between pt-2">
               {steps.map((step, index) => (
 
                 <div key={step.number} className={`flex items-center ${steps.length !== step.number ? "flex-1" : ""} `}>
@@ -463,7 +465,7 @@ function AdminForm() {
                     <div className={`w-14 h-14 rounded-2xl flex items-center justify-center transition-all duration-300 ${currentStep === step.number
                         ? 'bg-gradient-primary-diagonal shadow-primary scale-110'
                         : currentStep > step.number
-                          ? 'bg-emerald-500 shadow-md'
+                          ? 'bg-green-500 shadow-md shadow-green-500/20'
                           : 'bg-slate-100 group-hover:bg-slate-200'
                       }`}>
                       {currentStep > step.number ? (
@@ -474,7 +476,7 @@ function AdminForm() {
                     </div>
                     {/* Step Label */}
                     <div className="mt-3 text-center">
-                      <p className={`text-sm font-bold transition-colors ${currentStep === step.number ? 'text-primary' : currentStep > step.number ? 'text-emerald-600' : 'text-slate-500'
+                      <p className={`text-sm font-bold transition-colors ${currentStep === step.number ? 'text-primary' : currentStep > step.number ? 'text-green-600' : 'text-slate-500'
                         }`}>
                         {step.title}
                       </p>
@@ -492,7 +494,7 @@ function AdminForm() {
                   {index < steps.length - 1 && (
                     <div className="flex-1 mx-4 h-1 bg-slate-100 rounded-full overflow-hidden">
                       <div
-                        className={`h-full transition-all duration-500 ease-out ${currentStep > step.number ? 'bg-emerald-500' : 'bg-slate-100'
+                        className={`h-full transition-all duration-500 ease-out ${currentStep > step.number ? 'bg-green-500' : 'bg-slate-100'
                           }`}
                         style={{ width: currentStep > step.number ? '100%' : '0%' }}
                       />
@@ -505,15 +507,19 @@ function AdminForm() {
 
           {/* Form */}
           <form onSubmit={handleSubmit}>
-            <div className="bg-white border border-slate-100 rounded-2xl shadow-sm overflow-hidden">
+            <div className="relative bg-white border border-slate-100 rounded-2xl shadow-[0_4px_20px_-4px_rgba(0,0,0,0.1),0_8px_32px_-8px_rgba(0,0,0,0.08)] hover:shadow-[0_8px_30px_-4px_rgba(79,70,229,0.1),0_16px_40px_-8px_rgba(0,0,0,0.08)] transition-all duration-300 overflow-hidden group/form">
+              {/* Gradient accent bar at top */}
+              <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-indigo-500 via-blue-500 to-indigo-600 opacity-90"></div>
               {/* Step 1: Order & Sender Details */}
               {currentStep === 1 && (
                 <div className="animate-in slide-in-from-right-4 duration-300">
                   {/* Section Header */}
-                  <div className="px-8 py-6 bg-gradient-to-r from-slate-50 to-white border-b border-slate-100">
-                    <div className="flex items-center gap-4">
-                      <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center shadow-lg">
-                        <IconLibrary.User size={24} color="white" />
+                  <div className="px-8 py-6 bg-gradient-to-r from-indigo-50/80 via-slate-50 to-white border-b border-slate-100/80 relative overflow-hidden">
+                    {/* Subtle background pattern */}
+                    <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_-20%,rgba(99,102,241,0.08),transparent_50%)]"></div>
+                    <div className="flex items-center gap-4 relative z-10">
+                      <div className="w-14 h-14 bg-gradient-to-br from-indigo-500 to-blue-600 rounded-xl flex items-center justify-center shadow-lg shadow-indigo-500/25 transform transition-transform duration-200 hover:scale-105">
+                        <IconLibrary.User size={26} color="white" />
                       </div>
                       <div>
                         <h2 className="text-xl font-bold text-slate-800">Order & Sender Information</h2>
@@ -623,10 +629,12 @@ function AdminForm() {
               {currentStep === 2 && (
                 <div className="animate-in slide-in-from-right-4 duration-300">
                   {/* Section Header */}
-                  <div className="px-8 py-6 bg-gradient-to-r from-slate-50 to-white border-b border-slate-100">
-                    <div className="flex items-center gap-4">
-                      <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl flex items-center justify-center shadow-lg">
-                        <IconLibrary.MapPin size={24} color="white" />
+                  <div className="px-8 py-6 bg-gradient-to-r from-purple-50/80 via-slate-50 to-white border-b border-slate-100/80 relative overflow-hidden">
+                    {/* Subtle background pattern */}
+                    <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_-20%,rgba(147,51,234,0.08),transparent_50%)]"></div>
+                    <div className="flex items-center gap-4 relative z-10">
+                      <div className="w-14 h-14 bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl flex items-center justify-center shadow-lg shadow-purple-500/25 transform transition-transform duration-200 hover:scale-105">
+                        <IconLibrary.MapPin size={26} color="white" />
                       </div>
                       <div>
                         <h2 className="text-xl font-bold text-slate-800">Receiver Information</h2>
@@ -704,10 +712,12 @@ function AdminForm() {
               {currentStep === 3 && (
                 <div className="animate-in slide-in-from-right-4 duration-300">
                   {/* Section Header */}
-                  <div className="px-8 py-6 bg-gradient-to-r from-slate-50 to-white border-b border-slate-100">
-                    <div className="flex items-center gap-4">
-                      <div className="w-12 h-12 bg-gradient-primary-diagonal rounded-xl flex items-center justify-center shadow-lg">
-                        <IconLibrary.Package size={24} color="white" />
+                  <div className="px-8 py-6 bg-gradient-to-r from-orange-50/80 via-slate-50 to-white border-b border-slate-100/80 relative overflow-hidden">
+                    {/* Subtle background pattern */}
+                    <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_-20%,rgba(249,115,22,0.08),transparent_50%)]"></div>
+                    <div className="flex items-center gap-4 relative z-10">
+                      <div className="w-14 h-14 bg-gradient-to-br from-orange-500 to-orange-600 rounded-xl flex items-center justify-center shadow-lg shadow-orange-500/25 transform transition-transform duration-200 hover:scale-105">
+                        <IconLibrary.Package size={26} color="white" />
                       </div>
                       <div>
                         <h2 className="text-xl font-bold text-slate-800">Shipment Details</h2>
@@ -821,7 +831,7 @@ function AdminForm() {
               )}
 
               {/* Form Footer / Navigation */}
-              <div className="px-8 py-6 bg-slate-50 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-4">
+              <div className="px-8 py-6 bg-gradient-to-r from-slate-50 via-slate-50 to-indigo-50/30 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-4">
                 <div className="flex items-center gap-4 w-full sm:w-auto">
                   <button
                     type="button"
@@ -829,7 +839,7 @@ function AdminForm() {
                     disabled={currentStep === 1}
                     className={`flex items-center gap-2 px-5 py-3 rounded-xl font-semibold transition-all duration-200 ${currentStep === 1
                         ? "bg-slate-100 text-slate-400 cursor-not-allowed"
-                        : "bg-white border border-slate-200 text-slate-700 hover:bg-slate-50 hover:border-slate-300"
+                        : "bg-white border border-slate-200 text-slate-700 hover:bg-slate-50 hover:border-slate-300 shadow-sm hover:shadow-md"
                       }`}
                   >
                     <IconLibrary.ChevronLeft size={18} color="currentColor" />
@@ -853,7 +863,7 @@ function AdminForm() {
                       disabled={isSubmitting}
                       className={`flex-1 sm:flex-none flex items-center justify-center gap-2 px-8 py-3 rounded-xl font-semibold transition-all duration-200 ${isSubmitting
                           ? 'bg-slate-300 text-slate-500 cursor-not-allowed'
-                          : 'bg-gradient-to-r from-emerald-500 to-emerald-600 text-white shadow-lg shadow-emerald-500/25 hover:shadow-xl hover:shadow-emerald-500/30 hover:-translate-y-0.5'
+                          : 'bg-gradient-to-r from-green-500 to-green-600 text-white shadow-lg shadow-green-500/25 hover:shadow-xl hover:shadow-green-500/30 hover:-translate-y-0.5'
                         }`}
                     >
                       {isSubmitting ? (
